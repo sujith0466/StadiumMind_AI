@@ -1,4 +1,6 @@
-# Security Policy & Vulnerability Disclosure
+# StadiumMind AI — Security Policy
+
+**StadiumMind AI** treats platform security as a critical priority, especially given the life-safety implications of Smart Stadium emergency management (PromptWars Virtual Challenge-4).
 
 ## Supported Versions
 
@@ -6,13 +8,13 @@
 | ------- | ------------------ |
 | 1.0.x   | :white_check_mark: |
 
-## Security Architecture
+## Core Security Architecture
 
-StadiumMind AI enforces enterprise-grade security across all modular intelligence domains:
-- **Role-Based Access Control (RBAC):** Strict JWT verification and role decorators (`Commander`, `Executive`, `Volunteer`, `Fan`).
-- **Defensive Middleware:** API Rate Limiting, Cross-Origin Resource Sharing (CORS) hardening, and Input Sanitization.
-- **AI Safety & RAG Grounding:** Knowledge Assistant responses are strictly grounded against verified protocol templates to prevent prompt injection and policy hallucinations.
+1. **Role-Based Access Control (RBAC):** Prepared via JWT tokens. Commander-level actions (e.g. triggering an evacuation) require strict authorization.
+2. **Prompt Injection Defense:** All user inputs sent to the Knowledge Assistant or Fan Assistant pass through regex sanitization guards to strip override tokens before evaluation.
+3. **Grounded RAG:** AI endpoints utilize strict Retrieval-Augmented Generation mapped to trusted IDs, preventing hallucination.
+4. **Data Protection:** SQLAlchemy ORM strictly parameterizes all database queries.
 
 ## Reporting a Vulnerability
 
-If you discover a potential security vulnerability within StadiumMind AI, please report it immediately to the DevSecOps Lead via private email. Do not open public GitHub issues for sensitive security matters. All reports will be triaged within 24 hours under our Catastrophic/Critical SLA.
+If you discover a vulnerability affecting the PromptWars evaluation instance, please report it via GitHub Issues or contact the engineering team directly. We commit to a 24-hour triage SLA.

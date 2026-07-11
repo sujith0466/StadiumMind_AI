@@ -13,7 +13,7 @@ function App() {
           <span className="text-cyan-400 font-extrabold text-lg tracking-tight">StadiumMind AI</span>
           <NavLink
             to="/"
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `text-sm font-semibold px-3 py-1.5 rounded transition-colors ${isActive ? 'bg-cyan-600 text-white' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`
             }
           >
@@ -21,7 +21,7 @@ function App() {
           </NavLink>
           <NavLink
             to="/executive"
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `text-sm font-semibold px-3 py-1.5 rounded transition-colors ${isActive ? 'bg-amber-600 text-white' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`
             }
           >
@@ -29,7 +29,7 @@ function App() {
           </NavLink>
           <NavLink
             to="/emergency"
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `text-sm font-semibold px-3 py-1.5 rounded transition-colors ${isActive ? 'bg-red-700 text-white' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`
             }
           >

@@ -1,6 +1,6 @@
 # StadiumMind AI — Contributing Guide
 
-Thank you for your interest in contributing to StadiumMind AI.
+Thank you for your interest in contributing to StadiumMind AI, built for the **PromptWars Virtual Challenge-4: Smart Stadiums & Tournament Operations**.
 
 ## Development Setup
 
