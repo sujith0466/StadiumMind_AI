@@ -11,7 +11,10 @@ from services.crowd_ai import calculate_density, generate_safe_route
 crowd_bp = Blueprint("crowd", __name__, url_prefix="/api/crowd")
 
 
+from cache_utils import cache_response
+
 @crowd_bp.route("/zones", methods=["GET"])
+@cache_response(ttl_seconds=15)
 def get_zones():
     """Return all crowd zones with live density index."""
     zones = CrowdZone.query.all()
@@ -86,7 +89,10 @@ def recommend_route():
     return jsonify(route), 200
 
 
+from flask_jwt_extended import jwt_required
+
 @crowd_bp.route("/simulation", methods=["POST"])
+@jwt_required()
 def trigger_simulation():
     """Trigger a crowd surge simulation for testing."""
     return jsonify({"message": "Crowd surge simulated", "affected_zones": [2, 3]}), 200

@@ -52,7 +52,6 @@ def create_app(config_class=None):
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-        response.headers["Cache-Control"] = "no-store"
         return response
 
     # --- Root Index ---
@@ -83,6 +82,7 @@ def create_app(config_class=None):
     from api.emergency import emergency_bp, knowledge_bp
     from api.fan import fan_bp
     from api.orchestrator import orchestrator_bp, executive_bp
+    from api.auth import auth_bp
 
     app.register_blueprint(ops_bp)
     app.register_blueprint(crowd_bp)
@@ -95,6 +95,7 @@ def create_app(config_class=None):
     app.register_blueprint(fan_bp)
     app.register_blueprint(orchestrator_bp)
     app.register_blueprint(executive_bp)
+    app.register_blueprint(auth_bp)
 
     # --- Initialize DB tables (for testing and first-run) ---
     with app.app_context():

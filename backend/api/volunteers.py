@@ -45,7 +45,10 @@ def get_tasks():
     return jsonify(result), 200
 
 
+from flask_jwt_extended import jwt_required
+
 @accessibility_bp.route("/requests", methods=["POST"])
+@jwt_required()
 def create_accessibility_request():
     # Submit an accessibility request
     return jsonify({"message": "Request logged"}), 201

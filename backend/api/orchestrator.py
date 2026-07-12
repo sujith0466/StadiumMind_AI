@@ -53,7 +53,10 @@ DOMAIN_PRIORITY = {
 }
 
 
+from flask_jwt_extended import jwt_required
+
 @orchestrator_bp.route("/resolve", methods=["POST"])
+@jwt_required()
 def resolve_conflicts():
     """Arbitrate conflicting AI recommendations based on domain safety hierarchy."""
     data = request.get_json() or {}
@@ -158,7 +161,10 @@ def platform_health():
     return jsonify({"status": "ok", "services": 8, "incidents": Incident.query.count()}), 200
 
 
+from cache_utils import cache_response
+
 @executive_bp.route("/kpis", methods=["GET"])
+@cache_response(ttl_seconds=30)
 def get_executive_kpis():
     """Return detailed KPI metrics for Executive Dashboard."""
     from models import db

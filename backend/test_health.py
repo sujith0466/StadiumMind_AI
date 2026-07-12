@@ -266,9 +266,13 @@ class TestOrchestratorAPI:
         assert isinstance(decisions, list)
         assert decisions[0]["confidence_score"] >= 0.0
 
-    def test_resolve_emergency_wins(self, client):
+    def test_resolve_emergency_wins(self, client, app):
+        from flask_jwt_extended import create_access_token
+        with app.app_context():
+            token = create_access_token(identity="admin")
         r = client.post(
             "/api/orchestrator/resolve",
+            headers={"Authorization": f"Bearer {token}"},
             json={
                 "recommendations": [
                     {"domain": "TRANSPORT", "action": "Open Gate 4"},
@@ -281,9 +285,13 @@ class TestOrchestratorAPI:
         data = r.get_json()
         assert data["authoritative_decision"]["domain"] == "EMERGENCY"
 
-    def test_resolve_empty_returns_none(self, client):
+    def test_resolve_empty_returns_none(self, client, app):
+        from flask_jwt_extended import create_access_token
+        with app.app_context():
+            token = create_access_token(identity="admin")
         r = client.post(
             "/api/orchestrator/resolve",
+            headers={"Authorization": f"Bearer {token}"},
             json={"recommendations": []},
             content_type="application/json",
         )
