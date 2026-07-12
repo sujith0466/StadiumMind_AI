@@ -49,7 +49,7 @@ const CrowdDashboard: React.FC = () => {
       axios.get('/api/crowd/zones'),
       axios.get('/api/crowd/dashboard'),
     ]).then(([z, k]) => {
-      setZones(z.data)
+      setZones(Array.isArray(z.data) ? z.data : [])
       setKpi(k.data)
     }).catch(console.error)
       .finally(() => setLoading(false))

@@ -117,7 +117,7 @@ const ExecutiveDashboard: React.FC = () => {
       setKpis(kpiRes.data);
       setAnalytics(anaRes.data);
       setSummary(sumRes.data);
-      setDecisions(decRes.data);
+      setDecisions(Array.isArray(decRes.data) ? decRes.data : []);
     } catch (e: any) {
       console.error(e);
       setError(e.message || "Failed to fetch executive data.");

@@ -44,7 +44,7 @@ const OperationsDashboard: React.FC = () => {
       axios.get('/api/ops/incidents'),
       axios.get('/api/ops/dashboard'),
     ]).then(([i, k]) => {
-      setIncidents(i.data)
+      setIncidents(Array.isArray(i.data) ? i.data : [])
       setKpi(k.data)
     }).catch(console.error)
       .finally(() => setLoading(false))

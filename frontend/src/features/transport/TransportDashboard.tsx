@@ -39,7 +39,7 @@ const TransportDashboard: React.FC = () => {
       axios.get('/api/sustainability/metrics'),
       axios.get('/api/transport/recommendations/fan/1'), // demo fan
     ]).then(([p, m, r]) => {
-      setParking(p.data)
+      setParking(Array.isArray(p.data) ? p.data : [])
       setMetrics(m.data)
       setRecommendation(r.data)
     }).catch(console.error)

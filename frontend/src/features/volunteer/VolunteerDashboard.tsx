@@ -38,7 +38,7 @@ const VolunteerDashboard: React.FC = () => {
       axios.get('/api/volunteers/'),
       axios.get('/api/accessibility/analytics'),
     ]).then(([v, a]) => {
-      setVolunteers(v.data)
+      setVolunteers(Array.isArray(v.data) ? v.data : [])
       setAnalytics(a.data)
     }).catch(console.error)
       .finally(() => setLoading(false))
