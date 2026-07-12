@@ -34,7 +34,7 @@ function GlobalNavbar() {
     { id: 3, type: 'success', title: 'SLA Met: Egress Flow', time: '12m ago', read: true },
   ]);
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = Array.isArray(notifications) ? notifications.filter(n => !n.read).length : 0;
 
   const markAllAsRead = () => {
     setNotifications(notifications.map(n => ({ ...n, read: true })));

@@ -132,8 +132,9 @@ const ExecutiveDashboard: React.FC = () => {
 
   const healthScore = useMemo(() => {
     if (!data) return 0;
-    const healthyServices = data.services_health.filter(s => s.status === 'HEALTHY').length;
-    return Math.round((healthyServices / Math.max(data.services_health.length, 1)) * 100);
+    const healthyServices = Array.isArray(data.services_health) ? data.services_health.filter(s => s.status === 'HEALTHY').length : 0;
+    const totalServices = Array.isArray(data.services_health) ? data.services_health.length : 1;
+    return Math.round((healthyServices / Math.max(totalServices, 1)) * 100);
   }, [data]);
 
   if (loading) {

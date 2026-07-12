@@ -253,10 +253,10 @@ export default function FanPortal() {
     ])
       .then(([jRes, pRes, mRes, aRes]) => {
         if (!isMounted) return;
-        setJourneySteps(jRes.data || []);
-        setPois(pRes.data || []);
+        setJourneySteps(Array.isArray(jRes.data) ? jRes.data : []);
+        setPois(Array.isArray(pRes.data) ? pRes.data : []);
         setLiveMatch(mRes.data || null);
-        setAdvisories(aRes.data || []);
+        setAdvisories(Array.isArray(aRes.data) ? aRes.data : []);
       })
       .catch(() => {
         if (!isMounted) return;

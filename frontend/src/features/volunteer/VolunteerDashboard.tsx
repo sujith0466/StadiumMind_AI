@@ -44,7 +44,7 @@ const VolunteerDashboard: React.FC = () => {
       .finally(() => setLoading(false))
   }, [])
 
-  const activeCount = volunteers.filter(v => v.active).length
+  const activeCount = Array.isArray(volunteers) ? volunteers.filter(v => v.active).length : 0;
 
   const AnalyticsBar = ({ label, value, color }: { label: string; value: number; color: string }) => (
     <div>
