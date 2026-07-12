@@ -10,6 +10,24 @@ from services.ai_engine import generate_recommendation
 ops_bp = Blueprint("ops", __name__, url_prefix="/api/ops")
 
 
+@ops_bp.route('/seed', methods=['GET', 'POST'])
+def run_seed():
+    from production_seed import (
+        seed_stadium_zones, seed_emergency, seed_operations,
+        seed_crowd, seed_volunteers, seed_transport
+    )
+    try:
+        seed_stadium_zones()
+        seed_emergency()
+        seed_operations()
+        seed_crowd()
+        seed_volunteers()
+        seed_transport()
+        return jsonify({"status": "Success", "message": "Production database seeded successfully."}), 200
+    except Exception as e:
+        return jsonify({"status": "Error", "message": str(e)}), 500
+
+
 @ops_bp.route("/incidents", methods=["GET"])
 def get_incidents():
     """Return all operational incidents with zone and status context."""

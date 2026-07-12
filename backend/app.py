@@ -89,6 +89,25 @@ def create_app(config_class=None):
     # --- Initialize DB tables (for testing and first-run) ---
     with app.app_context():
         db.create_all()
+        
+        # Auto-seed production database if empty
+        try:
+            from models import StadiumZone
+            if not db.session.query(StadiumZone.query.exists()).scalar():
+                from production_seed import (
+                    seed_stadium_zones, seed_emergency, seed_operations,
+                    seed_crowd, seed_volunteers, seed_transport
+                )
+                print("Auto-seeding empty database on startup...")
+                seed_stadium_zones()
+                seed_emergency()
+                seed_operations()
+                seed_crowd()
+                seed_volunteers()
+                seed_transport()
+                print("Database auto-seeding complete.")
+        except Exception as e:
+            print(f"Auto-seed failed: {e}")
 
     return app
 
