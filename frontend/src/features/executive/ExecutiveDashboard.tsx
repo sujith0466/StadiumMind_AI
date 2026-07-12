@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { PageContainer } from '../../components/layout/PageContainer';
+import PageHead from '../../components/PageHead';
 
 interface ExecutiveData {
   platform_status: string;
@@ -94,7 +95,7 @@ const Sparkline = ({ data, colorClass = "bg-cyan-500" }: { data: number[], color
 const ExecutiveDashboard: React.FC = () => {
   const { translate } = useLanguage();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ExecutiveData | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [summary, setSummary] = useState<SummaryData | null>(null);
@@ -103,7 +104,7 @@ const ExecutiveDashboard: React.FC = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    setError(false);
+    setError(null);
     try {
       const [dashRes, kpiRes, anaRes, sumRes, decRes] = await Promise.all([
         axios.get('/api/executive/dashboard'),
@@ -117,9 +118,9 @@ const ExecutiveDashboard: React.FC = () => {
       setAnalytics(anaRes.data);
       setSummary(sumRes.data);
       setDecisions(decRes.data);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      setError(true);
+      setError(e.message || "Failed to fetch executive data.");
     } finally {
       setLoading(false);
     }
@@ -137,10 +138,11 @@ const ExecutiveDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="p-8 max-w-[1920px] mx-auto space-y-6">
-        <div className="h-32 bg-slate-900/50 rounded-3xl animate-pulse" />
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {[...Array(6)].map((_, i) => <div key={i} className="h-32 bg-slate-900/50 rounded-2xl animate-pulse" />)}
+      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+        <PageHead title="Executive Command Center" />
+        <div className="animate-pulse flex flex-col items-center space-y-4">
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-400 font-medium">Initializing Executive Command...</p>
         </div>
       </div>
     );
@@ -148,19 +150,30 @@ const ExecutiveDashboard: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center text-center p-6">
-        <div className="w-16 h-16 bg-red-500/20 text-red-400 flex items-center justify-center rounded-full mb-4 text-2xl">⚠️</div>
-        <h2 className="text-2xl font-bold text-white mb-2">{translate("System Error")}</h2>
-        <p className="text-slate-400 mb-6 max-w-md">{translate("Unable to securely connect to Executive Orchestrator. Please check network connectivity.")}</p>
-        <button onClick={fetchData} className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-medium transition-colors">
-          {translate("Retry Connection")}
-        </button>
+      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center p-6">
+        <PageHead title="Executive Command Center" />
+        <div className="max-w-md bg-slate-900 border border-red-500/30 rounded-xl p-8 text-center space-y-4">
+          <div className="w-16 h-16 bg-red-500/10 text-red-400 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-slate-100">Connection Interrupted</h2>
+          <p className="text-slate-400 text-sm">{error || "Unable to connect."}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-6 px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors font-medium border border-slate-700"
+          >
+            Retry Connection
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <PageContainer>
+      <PageHead title="Executive Command Center" />
       
       {/* PHASE 2: Executive Hero */}
       <header className="mb-8 relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl p-8 border border-slate-800 shadow-2xl">

@@ -1,3 +1,4 @@
+import PageHead from '../../components/PageHead';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PageContainer } from '../../components/layout/PageContainer'
@@ -71,6 +72,7 @@ const EmergencyDashboard: React.FC = () => {
 
   return (
     <PageContainer>
+      <PageHead title="Emergency Operations Center" />
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center border-b border-slate-800 pb-4 mb-6 gap-4">
         <div>
@@ -192,3 +194,4 @@ const EmergencyDashboard: React.FC = () => {
 }
 
 export default EmergencyDashboard
+

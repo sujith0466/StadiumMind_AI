@@ -1,3 +1,4 @@
+import PageHead from '../../components/PageHead';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PageContainer } from '../../components/layout/PageContainer'
@@ -67,6 +68,7 @@ const CrowdDashboard: React.FC = () => {
 
   return (
     <PageContainer>
+      <PageHead title="Crowd Intelligence" />
       {/* Header */}
       <div className="flex justify-between items-center border-b border-slate-800 pb-4 mb-6">
         <div>
@@ -166,3 +168,4 @@ const CrowdDashboard: React.FC = () => {
 }
 
 export default CrowdDashboard
+

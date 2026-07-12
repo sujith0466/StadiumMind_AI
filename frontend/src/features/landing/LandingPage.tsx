@@ -1,3 +1,4 @@
+import PageHead from '../../components/PageHead';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -115,6 +116,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30">
+      <PageHead title="StadiumMind AI | Autonomous Stadium Intelligence" />
       {/* Background Glows */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[140px]" />
@@ -462,3 +464,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

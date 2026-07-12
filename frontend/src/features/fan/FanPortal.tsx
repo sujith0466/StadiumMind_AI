@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { PageContainer } from '../../components/layout/PageContainer';
+import PageHead from '../../components/PageHead';
 import {
   Brain,
   Sparkles,
@@ -36,7 +37,8 @@ import {
   ShieldCheck,
   TrendingUp,
   Layers,
-  Award
+  Award,
+  
 } from 'lucide-react';
 
 interface FanJourneyStep {
@@ -186,7 +188,7 @@ const MULTILINGUAL_UI: Record<string, { welcome: string; askPlaceholder: string;
     onlineBadge: 'Serviços do Estádio Online'
   },
   hi: {
-    welcome: 'ग्रैंड मेट्रोपोलिटन एरिना में आपका स्वागत है! सुलभ रास्तों, भोजन कतारों या पार्किंग के बारे में मुझसे पूछें।',
+    welcome: 'ग्रैंड मेट्रोपोलिटन एरिना में आपका स्वागत है! सुलभ रास्तों, भोजन कतारों या पार्किंग के बारे में मुझसे पूछें.',
     askPlaceholder: 'दिशा-निर्देश, खाने की कतारें, सुलभ सुविधाओं के बारे में पूछें...',
     suggestionsTitle: 'सुझाए गए प्रश्न',
     onlineBadge: 'लाइव स्टेडियम सेवाएं सक्रिय'
@@ -421,6 +423,7 @@ export default function FanPortal() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500/30">
+      <PageHead title="Fan Portal" />
       {/* Dynamic Ambient Glow Gradients */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-10%] left-[15%] w-[550px] h-[550px] bg-cyan-500/10 rounded-full blur-[140px] animate-pulse" />
