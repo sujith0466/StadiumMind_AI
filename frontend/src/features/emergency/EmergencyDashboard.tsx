@@ -38,7 +38,7 @@ const EmergencyDashboard: React.FC = () => {
 
   const fetchIncidents = () => {
     axios.get('/api/emergency/incidents')
-      .then(r => setIncidents(r.data))
+      .then(r => setIncidents(Array.isArray(r.data) ? r.data : []))
       .catch(console.error)
       .finally(() => setLoading(false))
   }
@@ -194,4 +194,5 @@ const EmergencyDashboard: React.FC = () => {
 }
 
 export default EmergencyDashboard
+
 
