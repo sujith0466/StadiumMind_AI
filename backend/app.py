@@ -50,6 +50,16 @@ def create_app(config_class=None):
         response.headers["Cache-Control"] = "no-store"
         return response
 
+    # --- Root Index ---
+    @app.route("/", methods=["GET"])
+    def index():
+        return jsonify({
+            "status": "ok",
+            "message": "Backend is running",
+            "application": "StadiumMind AI",
+            "version": "1.0.0"
+        }), 200
+
     # --- Health Check ---
     @app.route("/health", methods=["GET"])
     def health_check():
