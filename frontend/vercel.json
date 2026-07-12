@@ -4,8 +4,8 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://stadiummind-backend.onrender.com/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://stadiummind-ai-yewi.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
