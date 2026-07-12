@@ -62,14 +62,18 @@ def test_login_failure(client):
 def test_login_rate_limiting(client):
     """Verify login rate limiting (configured limit is 5 per minute)."""
     # Use a unique IP for this test to avoid interfering with other tests
-    environ = {'REMOTE_ADDR': '127.0.0.99'}
-    
+    environ = {"REMOTE_ADDR": "127.0.0.99"}
+
     # 5 failed logins
     for _ in range(5):
-        client.post("/api/auth/login", json={"username": "a", "password": "b"}, environ_base=environ)
-    
+        client.post(
+            "/api/auth/login", json={"username": "a", "password": "b"}, environ_base=environ
+        )
+
     # 6th should be rate limited (429 Too Many Requests)
-    response = client.post("/api/auth/login", json={"username": "a", "password": "b"}, environ_base=environ)
+    response = client.post(
+        "/api/auth/login", json={"username": "a", "password": "b"}, environ_base=environ
+    )
     assert response.status_code == 429
 
 
