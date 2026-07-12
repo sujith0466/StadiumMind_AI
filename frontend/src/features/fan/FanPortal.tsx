@@ -439,6 +439,7 @@ export default function FanPortal() {
         {/* Error Safety Failover Banner */}
         {errorState && (
           <motion.div
+            role="alert"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between"
@@ -452,9 +453,10 @@ export default function FanPortal() {
         )}
 
         {/* PHASE 3 — LIVE MATCH & TOURNAMENT TELEMETRY CARD */}
-        <section aria-label="Live Match Status">
+        <section aria-labelledby="live-match-title">
+          <h2 id="live-match-title" className="sr-only">Live Match Status</h2>
           {loading ? (
-            <div className="h-56 rounded-3xl bg-slate-900/60 border border-slate-800 animate-pulse" />
+            <div className="h-56 rounded-3xl bg-slate-900/60 border border-slate-800 animate-pulse" aria-label="Loading match status" aria-hidden="true" />
           ) : liveMatch ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -626,14 +628,15 @@ export default function FanPortal() {
           </div>
 
           {/* Smart Recommendation Card Panel */}
-          <AnimatePresence>
-            {actionRecommendation && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="p-5 rounded-2xl bg-slate-900 border border-cyan-500/40 shadow-xl"
-              >
+          <div aria-live="polite">
+            <AnimatePresence>
+              {actionRecommendation && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-5 rounded-2xl bg-slate-900 border border-cyan-500/40 shadow-xl"
+                >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                   <div className="flex items-center gap-2.5">
                     <Sparkles className="w-5 h-5 text-cyan-400" />
@@ -656,7 +659,8 @@ export default function FanPortal() {
                 </div>
               </motion.div>
             )}
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         </section>
 
         {/* PHASE 5 & 6 — CHATGPT-STYLE AI STADIUM CONCIERGE */}
@@ -808,7 +812,9 @@ export default function FanPortal() {
                   {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                 </button>
 
+                <label htmlFor="chat-query" className="sr-only">Ask the AI Stadium Concierge</label>
                 <input
+                  id="chat-query"
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -819,7 +825,6 @@ export default function FanPortal() {
                     }
                   }}
                   placeholder={currentUI.askPlaceholder}
-                  aria-label={translate('Ask the AI Stadium Concierge')}
                   className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 />
 
@@ -850,7 +855,7 @@ export default function FanPortal() {
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" aria-label="Loading journey steps" aria-hidden="true">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
                   <div key={i} className="h-24 rounded-2xl bg-slate-950 border border-slate-800 animate-pulse" />
                 ))}
@@ -865,6 +870,7 @@ export default function FanPortal() {
                     <button
                       key={step.step_name}
                       onClick={() => setActiveStepName(step.step_name)}
+                      aria-current={isSelected ? 'step' : undefined}
                       className={`p-3.5 rounded-2xl border text-left transition-all ${
                         isSelected
                           ? 'bg-cyan-950/60 border-cyan-500 shadow-lg shadow-cyan-500/10'
@@ -926,7 +932,8 @@ export default function FanPortal() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                    aria-pressed={activeCategory === cat}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all focus:ring-2 focus:ring-cyan-500 focus:outline-none ${
                       activeCategory === cat
                         ? 'bg-cyan-500 text-slate-950 border-cyan-400 shadow-md'
                         : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700'
@@ -939,7 +946,7 @@ export default function FanPortal() {
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-label="Loading Points of Interest" aria-hidden="true">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <div key={i} className="h-32 rounded-2xl bg-slate-950 border border-slate-800 animate-pulse" />
                 ))}
@@ -961,7 +968,7 @@ export default function FanPortal() {
                   const isFav = favorites.includes(poi.id);
 
                   return (
-                    <div
+                    <article
                       key={poi.id}
                       className="p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between gap-3"
                     >
@@ -1008,7 +1015,7 @@ export default function FanPortal() {
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </article>
                   );
                 })}
               </div>

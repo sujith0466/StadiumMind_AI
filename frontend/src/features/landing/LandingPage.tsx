@@ -115,7 +115,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30">
+    <main className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30">
       <PageHead title="StadiumMind AI | Autonomous Stadium Intelligence" />
       {/* Background Glows */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -124,9 +124,9 @@ export default function LandingPage() {
       </div>
 
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 inset-x-0 h-16 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80 px-6">
+      <nav aria-label="Main Navigation" className="fixed top-0 inset-x-0 h-16 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80 px-6">
         <div className="max-w-[1920px] mx-auto h-full flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-3 group" aria-label="StadiumMind AI Home">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
               <Brain className="w-5 h-5 text-white" />
             </div>
@@ -218,6 +218,8 @@ export default function LandingPage() {
 
         {/* Live Telemetry Banner */}
         <motion.div
+          role="status"
+          aria-live="polite"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -461,7 +463,7 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }
 

@@ -62,24 +62,24 @@ interface Decision {
 const KpiCard = ({ label, value, trend, prefix = '', suffix = '', emptyState = '—' }: { label: string; value: number | string | null | undefined; trend?: 'up' | 'down' | 'neutral'; prefix?: string; suffix?: string; emptyState?: string }) => {
   const isNull = value === null || value === undefined;
   return (
-    <div className="bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-slate-800/60 hover:border-slate-700/80 transition-all flex flex-col justify-between group">
+    <article role="status" className="bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-slate-800/60 hover:border-slate-700/80 transition-all flex flex-col justify-between group">
       <div className="flex justify-between items-start mb-2">
-        <span className="text-xs font-semibold text-slate-400 tracking-wide uppercase">{label}</span>
-        {!isNull && trend === 'up' && <span className="text-emerald-400 text-xs">▲</span>}
-        {!isNull && trend === 'down' && <span className="text-red-400 text-xs">▼</span>}
+        <h2 className="text-xs font-semibold text-slate-400 tracking-wide uppercase">{label}</h2>
+        {!isNull && trend === 'up' && <span className="text-emerald-400 text-xs" aria-label="Trending up">▲</span>}
+        {!isNull && trend === 'down' && <span className="text-red-400 text-xs" aria-label="Trending down">▼</span>}
       </div>
       <div className="text-3xl font-black text-white group-hover:scale-105 transition-transform origin-left">
-        {isNull ? <span className="text-slate-600 font-medium text-2xl">{emptyState}</span> : `${prefix}${value}${suffix}`}
+        {isNull ? <span className="text-slate-600 font-medium text-2xl" aria-label="No data">{emptyState}</span> : `${prefix}${value}${suffix}`}
       </div>
-    </div>
+    </article>
   );
 };
 
 const Sparkline = ({ data, colorClass = "bg-cyan-500" }: { data: number[], colorClass?: string }) => {
-  if (!data || data.length === 0) return <div className="h-12 flex items-center justify-center text-xs text-slate-600">No Data</div>;
+  if (!data || data.length === 0) return <div className="h-12 flex items-center justify-center text-xs text-slate-600" aria-label="No data">No Data</div>;
   const max = Math.max(...data, 1);
   return (
-    <div className="flex items-end h-12 gap-1 mt-2">
+    <div className="flex items-end h-12 gap-1 mt-2" aria-hidden="true">
       {data.map((val, i) => (
         <motion.div
           key={i}
@@ -143,10 +143,10 @@ const ExecutiveDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center" role="status" aria-label="Loading Executive Dashboard">
         <PageHead title="Executive Command Center" />
         <div className="animate-pulse flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" aria-hidden="true"></div>
           <p className="text-slate-400 font-medium">Initializing Executive Command...</p>
         </div>
       </div>
@@ -167,7 +167,7 @@ const ExecutiveDashboard: React.FC = () => {
           <p className="text-slate-400 text-sm">{error || "Unable to connect."}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="mt-6 px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors font-medium border border-slate-700"
+            className="mt-6 px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition-colors font-medium border border-slate-700 focus:ring-2 focus:ring-cyan-500 focus:outline-none focus:ring-offset-2 focus:ring-offset-slate-900"
           >
             Retry Connection
           </button>
@@ -223,39 +223,39 @@ const ExecutiveDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         
         {/* PHASE 4: Executive AI Insights */}
-        <div className="lg:col-span-2 bg-slate-900/50 backdrop-blur-md rounded-3xl border border-slate-800/60 p-6 flex flex-col relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 to-purple-500" />
-          <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-indigo-400">✨</span> {translate("AI Executive Summary")}
+        <section className="lg:col-span-2 bg-slate-900/50 backdrop-blur-md rounded-3xl border border-slate-800/60 p-6 flex flex-col relative overflow-hidden" aria-labelledby="ai-summary-title">
+          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 to-purple-500" aria-hidden="true" />
+          <h2 id="ai-summary-title" className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <span className="text-indigo-400" aria-hidden="true">✨</span> {translate("AI Executive Summary")}
           </h2>
           {summary?.executive_summary ? (
-            <>
+            <div aria-live="polite">
               <p className="text-xl text-slate-300 leading-relaxed font-medium mb-6">
                 {summary.executive_summary}
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-auto">
                 <div className="bg-slate-950/50 p-4 rounded-xl border border-slate-800/50">
-                  <div className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Confidence")}</div>
-                  <div className="text-lg font-bold text-emerald-400">{summary.confidence ? Math.round(summary.confidence * 100) + '%' : '—'}</div>
+                  <h3 className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Confidence")}</h3>
+                  <p className="text-lg font-bold text-emerald-400">{summary.confidence ? Math.round(summary.confidence * 100) + '%' : '—'}</p>
                 </div>
                 <div className="bg-slate-950/50 p-4 rounded-xl border border-slate-800/50">
-                  <div className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Business Impact")}</div>
-                  <div className="text-lg font-bold text-amber-400">{summary.business_impact ? translate(summary.business_impact) : '—'}</div>
+                  <h3 className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Business Impact")}</h3>
+                  <p className="text-lg font-bold text-amber-400">{summary.business_impact ? translate(summary.business_impact) : '—'}</p>
                 </div>
               </div>
-            </>
+            </div>
           ) : (
-             <div className="flex-1 flex items-center justify-center text-slate-500 italic p-6 text-center border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20">
+             <div className="flex-1 flex items-center justify-center text-slate-500 italic p-6 text-center border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
                {translate("AI Summary currently unavailable. Awaiting sufficient domain telemetry.")}
              </div>
           )}
-        </div>
+        </section>
 
         {/* Live Operational Map / Analytics Stub */}
-        <div className="bg-slate-900/50 backdrop-blur-md rounded-3xl border border-slate-800/60 p-6">
-          <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">{translate("Live Venue Telemetry")}</h2>
+        <section className="bg-slate-900/50 backdrop-blur-md rounded-3xl border border-slate-800/60 p-6" aria-labelledby="telemetry-title">
+          <h2 id="telemetry-title" className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">{translate("Live Venue Telemetry")}</h2>
           <div className="space-y-6">
-            <div>
+            <div aria-live="polite">
               <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
                 <span>{translate("Crowd Density Trend")}</span>
                 <span>{analytics?.crowd_density?.length ? translate('LIVE') : translate('OFFLINE')}</span>
@@ -273,7 +273,7 @@ const ExecutiveDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
       </div>
 
@@ -285,22 +285,23 @@ const ExecutiveDashboard: React.FC = () => {
         </div>
         
         {decisions.length === 0 ? (
-          <div className="py-12 text-center text-slate-500 border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20">
+          <div className="py-12 text-center text-slate-500 border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
             {translate("No recent AI arbitration decisions.")}
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[800px]">
+              <caption className="sr-only">Recent unified AI arbitration decisions</caption>
               <thead>
                 <tr className="border-b border-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="pb-3 pr-4">{translate("Domain")}</th>
-                  <th className="pb-3 pr-4">{translate("Priority")}</th>
-                  <th className="pb-3 pr-4">{translate("Action")}</th>
-                  <th className="pb-3 pr-4">{translate("Confidence")}</th>
-                  <th className="pb-3">{translate("Status")}</th>
+                  <th scope="col" className="pb-3 pr-4">{translate("Domain")}</th>
+                  <th scope="col" className="pb-3 pr-4">{translate("Priority")}</th>
+                  <th scope="col" className="pb-3 pr-4">{translate("Action")}</th>
+                  <th scope="col" className="pb-3 pr-4">{translate("Confidence")}</th>
+                  <th scope="col" className="pb-3">{translate("Status")}</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
+              <tbody className="text-sm" aria-live="polite">
                 <AnimatePresence>
                   {decisions.map((d) => (
                     <motion.tr 
@@ -323,7 +324,7 @@ const ExecutiveDashboard: React.FC = () => {
                       <td className="py-4 pr-4 text-slate-400">{Math.round(d.confidence_score * 100)}%</td>
                       <td className="py-4">
                         <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
-                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" aria-hidden="true" />
                           {translate(d.execution_status)}
                         </span>
                       </td>
