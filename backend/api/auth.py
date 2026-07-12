@@ -4,6 +4,7 @@ from app import limiter
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
+
 @auth_bp.route("/login", methods=["POST"])
 @limiter.limit("5 per minute")
 def login():
@@ -20,5 +21,5 @@ def login():
     if username == admin_username and password == admin_password:
         access_token = create_access_token(identity=username)
         return jsonify({"access_token": access_token}), 200
-    
+
     return jsonify({"error": "Invalid credentials"}), 401

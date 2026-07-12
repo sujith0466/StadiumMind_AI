@@ -7,11 +7,11 @@ and crowd surge simulation endpoints.
 from flask import Blueprint, jsonify, request
 from models_crowd import CrowdZone, CrowdSnapshot, SafeRoute, DensityAlert
 from services.crowd_ai import calculate_density, generate_safe_route
+from cache_utils import cache_response
+from flask_jwt_extended import jwt_required
 
 crowd_bp = Blueprint("crowd", __name__, url_prefix="/api/crowd")
 
-
-from cache_utils import cache_response
 
 @crowd_bp.route("/zones", methods=["GET"])
 @cache_response(ttl_seconds=15)
@@ -88,8 +88,6 @@ def recommend_route():
     route = generate_safe_route(start, end, congested)
     return jsonify(route), 200
 
-
-from flask_jwt_extended import jwt_required
 
 @crowd_bp.route("/simulation", methods=["POST"])
 @jwt_required()

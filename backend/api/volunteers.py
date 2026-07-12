@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from models_volunteer import Volunteer, VolunteerTask
+from flask_jwt_extended import jwt_required
 
 volunteer_bp = Blueprint("volunteers", __name__, url_prefix="/api/volunteers")
 accessibility_bp = Blueprint("accessibility", __name__, url_prefix="/api/accessibility")
@@ -44,8 +45,6 @@ def get_tasks():
         )
     return jsonify(result), 200
 
-
-from flask_jwt_extended import jwt_required
 
 @accessibility_bp.route("/requests", methods=["POST"])
 @jwt_required()

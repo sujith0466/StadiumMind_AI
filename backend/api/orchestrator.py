@@ -8,6 +8,8 @@ from models import Incident, StadiumZone
 from models_decision import AIArbitrationDecision
 from models_volunteer import AccessibilityRequest
 from models_transport import ShuttleRoute
+from flask_jwt_extended import jwt_required
+from cache_utils import cache_response
 
 orchestrator_bp = Blueprint("orchestrator", __name__, url_prefix="/api/orchestrator")
 executive_bp = Blueprint("executive", __name__, url_prefix="/api/executive")
@@ -52,8 +54,6 @@ DOMAIN_PRIORITY = {
     "FAN": 40,
 }
 
-
-from flask_jwt_extended import jwt_required
 
 @orchestrator_bp.route("/resolve", methods=["POST"])
 @jwt_required()
@@ -160,8 +160,6 @@ def platform_health():
     """Lightweight platform health-check for monitoring integrations."""
     return jsonify({"status": "ok", "services": 8, "incidents": Incident.query.count()}), 200
 
-
-from cache_utils import cache_response
 
 @executive_bp.route("/kpis", methods=["GET"])
 @cache_response(ttl_seconds=30)

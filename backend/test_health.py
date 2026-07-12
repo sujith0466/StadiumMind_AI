@@ -268,6 +268,7 @@ class TestOrchestratorAPI:
 
     def test_resolve_emergency_wins(self, client, app):
         from flask_jwt_extended import create_access_token
+
         with app.app_context():
             token = create_access_token(identity="admin")
         r = client.post(
@@ -287,6 +288,7 @@ class TestOrchestratorAPI:
 
     def test_resolve_empty_returns_none(self, client, app):
         from flask_jwt_extended import create_access_token
+
         with app.app_context():
             token = create_access_token(identity="admin")
         r = client.post(
