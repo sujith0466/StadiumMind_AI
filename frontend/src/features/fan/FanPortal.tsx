@@ -116,7 +116,7 @@ interface ActionRecommendation {
   confidence: string;
 }
 
-const CATEGORY_META: Record<string, { label: string; icon: any; colorClass: string; bgClass: string }> = {
+const CATEGORY_META: Record<string, { label: string; icon: React.ElementType; colorClass: string; bgClass: string }> = {
   MEDICAL: { label: 'Medical & First Aid', icon: HeartPulse, colorClass: 'text-rose-400', bgClass: 'bg-rose-500/10 border-rose-500/30' },
   RESTROOM: { label: 'Restrooms & ADA', icon: Accessibility, colorClass: 'text-cyan-400', bgClass: 'bg-cyan-500/10 border-cyan-500/30' },
   FOOD: { label: 'Dining & Concessions', icon: Utensils, colorClass: 'text-amber-400', bgClass: 'bg-amber-500/10 border-amber-500/30' },

@@ -15,5 +15,5 @@ def match_volunteer_to_task(task, available_volunteers):
     return {
         "task_id": task.id if task else None,
         "assigned_volunteer_id": best_match.id if best_match else None,
-        "confidence_score": 0.92
+        "confidence_score": 0.92,
     }

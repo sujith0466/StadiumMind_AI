@@ -6,6 +6,7 @@ Central hub for all LLM requests. Handles:
   - Local intelligence fallback (always available)
   - Retry logic, timeout management, usage logging
 """
+
 import os
 import time
 import logging
@@ -66,10 +67,15 @@ def _call_openrouter(prompt: str, model: str, timeout: float = AI_TIMEOUT) -> st
     try:
         resp = requests.post(OPENROUTER_BASE, json=payload, headers=headers, timeout=timeout)
         if resp.status_code in QUOTA_EXCEEDED_CODES:
-            logger.warning("OpenRouter quota/rate limit reached (%s) — fast failover without retries", resp.status_code)
+            logger.warning(
+                "OpenRouter quota/rate limit reached (%s) — fast failover without retries",
+                resp.status_code,
+            )
             return "QUOTA_EXCEEDED"
         if resp.status_code in RETRYABLE_CODES:
-            logger.warning("OpenRouter model %s returned %s — retrying next", model, resp.status_code)
+            logger.warning(
+                "OpenRouter model %s returned %s — retrying next", model, resp.status_code
+            )
             return None
         resp.raise_for_status()
         return resp.json()["choices"][0]["message"]["content"].strip()
@@ -104,7 +110,10 @@ def _try_gemini(prompt: str) -> str | None:
     try:
         resp = requests.post(url, json=payload, timeout=AI_TIMEOUT)
         if resp.status_code in QUOTA_EXCEEDED_CODES:
-            logger.warning("Gemini quota/rate limit reached (%s) — fast failover to local engine", resp.status_code)
+            logger.warning(
+                "Gemini quota/rate limit reached (%s) — fast failover to local engine",
+                resp.status_code,
+            )
             return None
         if resp.status_code in RETRYABLE_CODES:
             logger.warning("Gemini returned %s", resp.status_code)
@@ -158,7 +167,9 @@ MULTILINGUAL_PREFIX = {
 
 
 def _local_response(prompt: str, language: str = "en") -> str:
-    query_target = prompt.split("Question:")[-1].strip().lower() if "Question:" in prompt else prompt.lower()
+    query_target = (
+        prompt.split("Question:")[-1].strip().lower() if "Question:" in prompt else prompt.lower()
+    )
     for keyword, response in LOCAL_KNOWLEDGE.items():
         if keyword in query_target:
             prefix = MULTILINGUAL_PREFIX.get(language, "")
@@ -178,7 +189,7 @@ def query_ai(
 ) -> dict:
     """
     Unified AI Gateway entry point.
-    
+
     Returns:
         {
             "response": str,

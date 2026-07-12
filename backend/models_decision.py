@@ -1,8 +1,9 @@
 from app import db
 from datetime import datetime
 
+
 class AIArbitrationDecision(db.Model):
-    __tablename__ = 'ai_arbitration_decisions'
+    __tablename__ = "ai_arbitration_decisions"
     id = db.Column(db.Integer, primary_key=True)
     source_ai_domain = db.Column(db.String(50), nullable=False)
     action_code = db.Column(db.String(50), nullable=False)

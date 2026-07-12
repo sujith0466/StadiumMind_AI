@@ -3,25 +3,28 @@ import socket
 import traceback
 from dotenv import load_dotenv
 
+
 def mask_url(url):
-    if not url: return "NONE"
+    if not url:
+        return "NONE"
     if "@" in url:
         parts = url.split("@")
         creds = parts[0].split("://")
         return f"{creds[0]}://{creds[1].split(':')[0]}:***@{parts[1]}"
     return url
 
+
 def main():
     print("=== NETWORK DIAGNOSIS ===")
-    
+
     # 6 & 7. Verify dotenv and env vars
-    env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.env'))
+    env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".env"))
     print(f"Loading .env from: {env_path}")
     load_dotenv(dotenv_path=env_path, override=True)
-    
+
     db_url = os.environ.get("DATABASE_URL")
     print(f"1. Exact DATABASE_URL (masked): {mask_url(db_url)}")
-    
+
     host = ""
     port = 5432
     if db_url and "@" in db_url:
@@ -56,12 +59,15 @@ def main():
     print("\n2. Full SQLAlchemy/psycopg2 Traceback:")
     try:
         from app import create_app, db
+
         app = create_app()
         with app.app_context():
             from sqlalchemy import text
+
             db.session.execute(text("SELECT 1;"))
     except Exception:
         print(traceback.format_exc())
+
 
 if __name__ == "__main__":
     main()

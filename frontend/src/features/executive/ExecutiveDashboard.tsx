@@ -59,7 +59,7 @@ interface Decision {
   timestamp: string;
 }
 
-const KpiCard = ({ label, value, trend, prefix = '', suffix = '', emptyState = '—' }: { label: string; value: any; trend?: 'up' | 'down' | 'neutral'; prefix?: string; suffix?: string; emptyState?: string }) => {
+const KpiCard = ({ label, value, trend, prefix = '', suffix = '', emptyState = '—' }: { label: string; value: number | string | null | undefined; trend?: 'up' | 'down' | 'neutral'; prefix?: string; suffix?: string; emptyState?: string }) => {
   const isNull = value === null || value === undefined;
   return (
     <div className="bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-slate-800/60 hover:border-slate-700/80 transition-all flex flex-col justify-between group">
@@ -118,9 +118,13 @@ const ExecutiveDashboard: React.FC = () => {
       setAnalytics(anaRes.data);
       setSummary(sumRes.data);
       setDecisions(Array.isArray(decRes.data) ? decRes.data : []);
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
-      setError(e.message || "Failed to fetch executive data.");
+      if (e instanceof Error) {
+        setError(e.message || "Failed to fetch executive data.");
+      } else {
+        setError("Failed to fetch executive data.");
+      }
     } finally {
       setLoading(false);
     }

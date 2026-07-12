@@ -2,6 +2,7 @@
 StadiumMind AI — Unified Flask Application Factory
 Registers all modular blueprints and initializes core extensions.
 """
+
 import os
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -20,13 +21,17 @@ def create_app(config_class=None):
 
     # --- Configuration ---
     from dotenv import load_dotenv
-    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'), override=True)
-    
+
+    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"), override=True)
+
     if config_class:
         app.config.from_object(config_class)
     else:
         app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key")
-        db_url = os.environ.get("DATABASE_URL", "postgresql://stadium_admin:stadium_password@localhost:5432/stadium_mind")
+        db_url = os.environ.get(
+            "DATABASE_URL",
+            "postgresql://stadium_admin:stadium_password@localhost:5432/stadium_mind",
+        )
         if db_url.startswith("postgres://"):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
         app.config["SQLALCHEMY_DATABASE_URI"] = db_url
@@ -53,12 +58,17 @@ def create_app(config_class=None):
     # --- Root Index ---
     @app.route("/", methods=["GET"])
     def index():
-        return jsonify({
-            "status": "ok",
-            "message": "Backend is running",
-            "application": "StadiumMind AI",
-            "version": "1.0.0"
-        }), 200
+        return (
+            jsonify(
+                {
+                    "status": "ok",
+                    "message": "Backend is running",
+                    "application": "StadiumMind AI",
+                    "version": "1.0.0",
+                }
+            ),
+            200,
+        )
 
     # --- Health Check ---
     @app.route("/health", methods=["GET"])
@@ -89,15 +99,21 @@ def create_app(config_class=None):
     # --- Initialize DB tables (for testing and first-run) ---
     with app.app_context():
         db.create_all()
-        
+
         # Auto-seed production database if empty
         try:
             from models import StadiumZone
+
             if not db.session.query(StadiumZone.query.exists()).scalar():
                 from production_seed import (
-                    seed_stadium_zones, seed_emergency, seed_operations,
-                    seed_crowd, seed_volunteers, seed_transport
+                    seed_stadium_zones,
+                    seed_emergency,
+                    seed_operations,
+                    seed_crowd,
+                    seed_volunteers,
+                    seed_transport,
                 )
+
                 print("Auto-seeding empty database on startup...")
                 seed_stadium_zones()
                 seed_emergency()
@@ -114,5 +130,6 @@ def create_app(config_class=None):
 
 if __name__ == "__main__":
     from app import create_app
+
     app = create_app()
     app.run(debug=False, host="0.0.0.0", port=5000)
