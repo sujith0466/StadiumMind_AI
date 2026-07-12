@@ -30,10 +30,17 @@ def get_incidents():
 def create_incident():
     """Create and triage a new operational incident with AI recommendation."""
     data = request.get_json() or {}
+    requested_zone_id = data.get("zone_id", 1)
+    from models import StadiumZone
+    zone = db.session.get(StadiumZone, requested_zone_id)
+    if not zone:
+        first_zone = db.session.query(StadiumZone).first()
+        requested_zone_id = first_zone.id if first_zone else 1
+
     new_inc = Incident(
         severity=data.get("severity", "LOW"),
         status="OPEN",
-        zone_id=data.get("zone_id", 1),
+        zone_id=requested_zone_id,
     )
     db.session.add(new_inc)
     db.session.flush()  # get ID before commit

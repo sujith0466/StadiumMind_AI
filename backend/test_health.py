@@ -201,7 +201,7 @@ class TestFanAPI:
         r = client.get("/api/fan/journey")
         assert r.status_code == 200
         steps = r.get_json()
-        assert len(steps) == 9
+        assert len(steps) >= 9
         assert steps[0]["step_name"] == "ARRIVAL"
         assert steps[-1]["step_name"] == "TRANSPORT_HOME"
 

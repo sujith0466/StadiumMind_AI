@@ -6,7 +6,17 @@ sustainability_bp = Blueprint('sustainability', __name__, url_prefix='/api/susta
 
 @transport_bp.route('/parking', methods=['GET'])
 def get_parking():
-    return jsonify([]), 200
+    parking = ParkingZone.query.all()
+    result = []
+    for p in parking:
+        result.append({
+            "id": p.id,
+            "name": p.name,
+            "max_capacity": p.max_capacity,
+            "current_occupancy": p.current_occupancy,
+            "zone_type": p.zone_type
+        })
+    return jsonify(result), 200
 
 @transport_bp.route('/recommendations/fan/<int:fan_id>', methods=['GET'])
 def get_fan_recommendation(fan_id):

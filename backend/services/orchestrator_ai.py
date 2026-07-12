@@ -1,28 +1,55 @@
-def resolve_ai_conflicts(domain_recommendations):
+"""
+StadiumMind AI — Unified AI Orchestrator (upgraded)
+Conflict resolver with real timestamp and confidence scoring.
+"""
+from datetime import datetime, timezone
+
+
+PRIORITY_MAP = {
+    "EMERGENCY": 0,
+    "CROWD": 1,
+    "OPERATIONS": 2,
+    "TRANSPORT": 3,
+    "FAN": 4,
+}
+
+CONFIDENCE_BY_PRIORITY = {
+    0: 0.99,
+    1: 0.92,
+    2: 0.85,
+    3: 0.78,
+    4: 0.70,
+}
+
+
+def resolve_ai_conflicts(domain_recommendations: list) -> dict:
     """
-    Unified AI Conflict Resolver & Orchestration Logic:
+    Unified AI Conflict Resolver & Orchestration Logic.
     Strict Priority Hierarchy:
-    1. Emergency AI (P0)
-    2. Crowd AI (P1)
-    3. Operations AI (P2)
-    4. Transport AI (P3)
-    5. Fan AI (P4)
+      P0 EMERGENCY → P1 CROWD → P2 OPERATIONS → P3 TRANSPORT → P4 FAN
     """
-    # Sort recommendations by priority rank
-    priority_map = {
-        'EMERGENCY': 0,
-        'CROWD': 1,
-        'OPERATIONS': 2,
-        'TRANSPORT': 3,
-        'FAN': 4
-    }
+    if not domain_recommendations:
+        return {
+            "authoritative_decision": None,
+            "overridden_recommendations": [],
+            "confidence_score": 0.0,
+            "resolution_timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+
     sorted_recs = sorted(
-        domain_recommendations, 
-        key=lambda r: priority_map.get(r.get('domain', 'FAN'), 99)
+        domain_recommendations,
+        key=lambda r: PRIORITY_MAP.get(r.get("domain", "FAN").upper(), 99),
     )
-    winner = sorted_recs[0] if sorted_recs else None
+
+    winner = sorted_recs[0]
+    priority_rank = PRIORITY_MAP.get(winner.get("domain", "FAN").upper(), 99)
+    confidence = CONFIDENCE_BY_PRIORITY.get(priority_rank, 0.70)
+
     return {
         "authoritative_decision": winner,
         "overridden_recommendations": sorted_recs[1:],
-        "resolution_timestamp": "2026-07-11T10:00:00Z"
+        "confidence_score": confidence,
+        "resolution_timestamp": datetime.now(timezone.utc).isoformat(),
+        "priority_rank": priority_rank,
+        "total_recommendations_received": len(domain_recommendations),
     }

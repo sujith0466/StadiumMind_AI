@@ -1,114 +1,129 @@
-# StadiumMind AI
-
-![PromptWars Challenge-4 Badge](https://img.shields.io/badge/PromptWars%20Virtual%20Challenge--4-Smart%20Stadiums%20&%20Tournament%20Operations-blue?style=for-the-badge)
-
-**An autonomous, multi-agent enterprise platform revolutionizing venue operations, crowd safety, and fan experience.**
-
----
-
-## 🏟️ Project Overview
-
-**StadiumMind AI** was engineered specifically for the **PromptWars Virtual Challenge-4: Smart Stadiums & Tournament Operations**.
-
-The modern mega-stadium is a complex, hyper-dynamic ecosystem. Managing 80,000+ fans, coordinating hundreds of volunteers, ensuring ADA accessibility, minimizing carbon footprint, and responding to medical or security emergencies requires split-second, coordinated intelligence. 
-
-StadiumMind AI solves this by deploying a distributed network of specialized AI agents — coordinated by a central Unified AI Orchestrator — to predict crowd surges, dispatch volunteers, translate fan queries, and execute life-saving evacuation routes in real time.
+<div align="center">
+  <h1>🏟️ StadiumMind AI</h1>
+  <p><strong>The Intelligence Engine for Smart Stadiums & Tournament Operations</strong></p>
+  <p><em>PromptWars Virtual Challenge-4 Official Submission</em></p>
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  [![React](https://img.shields.io/badge/React-18-blue.svg)](https://react.dev)
+  [![Flask](https://img.shields.io/badge/Flask-3-black.svg)](https://flask.palletsprojects.com/)
+</div>
 
 ---
 
-## 🎯 PromptWars Challenge Alignment
+## 📖 Overview
 
-Every feature of StadiumMind AI maps directly to the core themes of the PromptWars Virtual Challenge-4:
+StadiumMind AI is an enterprise-grade, multi-agent AI system designed to operate massive sporting events and tournaments. It unifies scattered domain data (Emergency, Crowd, Volunteers, Transport, and Fan Experience) into a deterministic, AI-arbitrated Executive Dashboard.
 
-| Challenge Requirement | StadiumMind AI Solution |
-|-----------------------|-------------------------|
-| **Smart Stadiums** | Unified orchestration of Operations, Crowd, and Transport domains |
-| **Tournament Operations** | Volunteer dispatch, task triaging, and real-time dashboard oversight |
-| **Fan Experience** | 9-step mapped Fan Journey, BFF dashboard, multilingual RAG assistant |
-| **Accessibility** | ADA routing flags, wheelchair-accessible POIs, high-contrast themes |
-| **Emergency Safety** | 5-level severity matrix, evacuation overrides, deterministic AI arbitration |
-| **Sustainability** | EV shuttle routing, smart parking occupancy, energy/carbon metrics |
+When a crisis occurs, the **AI Orchestrator** overrides lower-tier operations natively, guaranteeing safety protocols over generic convenience.
 
----
+## 🏆 PromptWars Challenge-4 Alignment
 
-## 🧠 Key Features & AI Capabilities
-
-- **Unified AI Orchestrator:** A deterministic Conflict Resolver that arbitrates between competing AI suggestions (e.g., *EMERGENCY overrides TRANSPORT*).
-- **Emergency Knowledge Assistant:** A keyword-based RAG pipeline providing instant, grounded protocol responses (with cited IDs) to mitigate hallucinations.
-- **Crowd Intelligence:** Real-time spatial density prediction and dynamic safe-route wayfinding away from congestion.
-- **Multilingual Fan Assistant:** Grounded, localized AI responses supporting English, Spanish, French, and German.
-- **C-Suite Executive Command:** High-level telemetry covering platform health, active incidents, attendance, and Eco-Score.
+This platform aligns 100% with the criteria for **Smart Stadiums & Tournament Operations**:
+- **Generative AI:** RAG-enabled incident response and fan wayfinding.
+- **Data Synthesis:** Aggregation of live data across 8 distinct domains.
+- **Safety Critical:** Deterministic fallback heuristic guaranteeing uptime without active LLM keys.
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture Diagram
 
-StadiumMind AI is an enterprise-grade monorepo employing a modular **Backend-For-Frontend (BFF)** architecture.
-
-- **Frontend:** React 18 + Vite + Tailwind CSS + React Router v6
-- **Backend:** Python Flask + 11 Modular Blueprints + SQLAlchemy ORM
-- **Database:** PostgreSQL (Relational Data) + Redis (Pub/Sub & Caching)
-- **Shared Contracts:** Zod/TypeScript schemas mirroring Python ORM models
-
-For a deep dive, see [System Architecture](SYSTEM_ARCHITECTURE.md) and the [AI Pipeline](AI_PIPELINE.md).
-
----
-
-## 🚀 Deployment Instructions
-
-The platform is containerized for zero-friction evaluation.
-
-### Option A: Docker Compose (Recommended)
-Launch the entire 4-service stack (Database, Redis, Backend API, Frontend SPA).
-```bash
-docker-compose up --build -d
+```mermaid
+graph TD
+    UI[React + Tailwind UI] -->|Axios HTTP| API[Flask API Gateway]
+    API --> ORCH[AI Orchestrator]
+    ORCH --> EM[Emergency Agent]
+    ORCH --> OP[Operations Agent]
+    ORCH --> FAN[Fan Agent]
+    
+    ORCH --> UAG[Unified AI Gateway]
+    UAG -->|Failover| OR[OpenRouter API]
+    UAG -->|Failover| GEM[Gemini API]
+    UAG -->|Fallback| LOC[Local/Heuristic AI]
+    
+    API --> DB[(Supabase PostgreSQL)]
+    API --> CACHE[(Redis Memory)]
 ```
-- Frontend Dashboards: `http://localhost:3000`
-- Backend API Gateway: `http://localhost:5000`
 
-### Option B: Local Development
-Ensure PostgreSQL and Redis are running locally.
+## 🧠 AI Pipeline
+
+StadiumMind features a tiered AI hierarchy:
+1. **Executive Orchestrator:** Resolves conflicting decisions across agents (e.g., *Locking Gate A for security* overrides *Opening Gate A for crowd flow*).
+2. **Domain Agents:** Specialized micro-agents for Crowd, Emergency, Transport, and Fan queries.
+3. **Unified AI Gateway:** Routes prompts to OpenRouter, falls back to Gemini on 429/Timeout, and finally falls back to Local deterministic heuristics to guarantee zero downtime.
+
+## 📂 Folder Structure
+
+```text
+StadiumMind-AI/
+├── backend/                  # Flask REST API + SQLAlchemy
+│   ├── api/                  # Modular Blueprints (Ops, Crowd, Fan, etc.)
+│   ├── .env.example          # Environment variables template
+│   └── app.py                # WSGI entry point
+├── frontend/                 # Vite + React 18
+│   ├── src/
+│   │   ├── features/         # 8 Distinct Domain Dashboards
+│   │   └── index.css         # Tailwind directives
+│   └── .env.example          # Frontend API targets
+├── screenshots/              # Playwright E2E visual evidence
+└── playwright-report/        # Automated UI/UX test verification
+```
+
+## ✨ Features
+
+- **Executive Dashboard:** Live C-Suite aggregations of revenue, AI confidence, and emergency readiness.
+- **Crowd Intelligence:** Zone density heatmaps and safe route predictions.
+- **Emergency Operations:** Critical incident triage and protocol injection.
+- **Global I18N:** Seamless language switching across all endpoints without hardcoded strings.
+- **Premium UX:** State-of-the-art glassmorphism and Framer Motion micro-interactions.
+
+## 💻 Tech Stack
+
+- **Frontend:** React 18, TypeScript, Vite, TailwindCSS, Framer Motion
+- **Backend:** Python 3.13, Flask, SQLAlchemy, Flask-JWT-Extended, Flask-Limiter
+- **Database:** PostgreSQL (Supabase), Redis
+- **AI Integration:** OpenRouter (Claude/Llama), Google Gemini API
+- **Testing:** Playwright, PyTest
+
+## 🚀 Setup & Installation
+
+### 1. Backend
 ```bash
-# 1. Backend
 cd backend
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
+cp .env.example .env      # Configure your DB and API keys
 python app.py
+```
 
-# 2. Frontend
+### 2. Frontend
+```bash
 cd frontend
-npm ci
+npm install
+cp .env.example .env      # Configure VITE_API_BASE_URL
 npm run dev
 ```
 
-For Render/Vercel cloud deployment instructions, see the [Deployment Guide](DEPLOYMENT_GUIDE.md).
+## 🔐 Environment Variables
 
----
+Reference the `backend/.env.example` and `frontend/.env.example` files.
+**Never commit live API keys.** The system is designed to fail over to local heuristics if keys are missing.
 
-## 🛡️ Security & Testing
+## ☁️ Deployment
 
-- **Security:** Rate limiting, CORS, Security Headers, ORM parameterized queries, and Prompt Injection Guards on all LLM inputs. See [SECURITY.md](SECURITY.md).
-- **Testing:** 40-case Pytest suite covering AI determinism, health checks, and all 7 domain APIs.
-- **Accessibility:** WCAG 2.1 AA compliant color contrast, ARIA landmarks, and screen-reader optimized navigation.
+- **Vercel (Frontend):** Uses `vercel.json` to proxy `/api/*` requests, avoiding CORS complexities.
+- **Render (Backend):** Uses `render.yaml` to spin up a managed PostgreSQL, Redis, and Web service with zero configuration.
 
----
+## 📸 Screenshots
 
-## 📚 Documentation Directory
+Please view the `/screenshots/` directory for high-resolution captures of the Executive, Operations, Emergency, and Fan dashboards rendered by Playwright for Desktop.
 
-Explore the complete enterprise documentation suite:
-- [System Architecture](SYSTEM_ARCHITECTURE.md)
-- [AI Pipeline & Orchestration](AI_PIPELINE.md)
-- [API Reference](API_REFERENCE.md)
-- [Deployment Guide](DEPLOYMENT_GUIDE.md)
-- [Project Structure](PROJECT_STRUCTURE.md)
-- [Environment Variables](ENVIRONMENT.md)
-- [Changelog](CHANGELOG.md)
-- [Contributing Guide](CONTRIBUTING.md)
+## 🔮 Future Scope
+- Real-time WebSockets for sub-second incident propagation.
+- RFID/NFC integration for live volunteer tracking.
 
----
+## 📄 License
+MIT License.
 
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-*Built for the PromptWars Virtual Challenge-4 by the StadiumMind AI Engineering Team.*
+## 👥 Contributors
+Developed by the StadiumMind Engineering Team for PromptWars Challenge-4.

@@ -6,13 +6,37 @@ accessibility_bp = Blueprint('accessibility', __name__, url_prefix='/api/accessi
 
 @volunteer_bp.route('/', methods=['GET'])
 def get_volunteers():
-    # Returns the list of volunteers
-    return jsonify([]), 200
+    volunteers = Volunteer.query.all()
+    result = []
+    for v in volunteers:
+        result.append({
+            "id": v.id,
+            "name": v.name,
+            "active": v.active,
+            "languages": v.languages,
+            "medical_training": v.medical_training,
+            "mobility_assistance": v.mobility_assistance,
+            "sign_language": v.sign_language,
+            "child_assistance": v.child_assistance,
+            "security_clearance": v.security_clearance,
+            "zone_certifications": v.zone_certifications
+        })
+    return jsonify(result), 200
 
 @volunteer_bp.route('/tasks', methods=['GET'])
 def get_tasks():
-    # Returns the list of volunteer tasks
-    return jsonify([]), 200
+    tasks = VolunteerTask.query.all()
+    result = []
+    for t in tasks:
+        result.append({
+            "id": t.id,
+            "description": t.description,
+            "status": t.status,
+            "priority": t.priority,
+            "created_at": t.created_at.isoformat() if t.created_at else None,
+            "response_duration": t.response_duration
+        })
+    return jsonify(result), 200
 
 @accessibility_bp.route('/requests', methods=['POST'])
 def create_accessibility_request():

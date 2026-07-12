@@ -1,37 +1,33 @@
 """
-StadiumMind AI — Emergency Intelligence API
-Handles high-severity incident triage, evacuation orchestration,
-and RAG-based Knowledge Assistant queries.
+StadiumMind AI — Emergency Intelligence API (upgraded)
+Uses Unified AI Gateway for Knowledge Assistant queries.
 """
 import re
 from flask import Blueprint, jsonify, request
-from models_emergency import db, EmergencyIncident, ProtocolDocument, KnowledgeQuery
+from models_emergency import db, EmergencyIncident
+from services.ai_gateway import query_ai, sanitize
 
 emergency_bp = Blueprint("emergency", __name__, url_prefix="/api/emergency")
 knowledge_bp = Blueprint("knowledge", __name__, url_prefix="/api/knowledge")
 
-# ---------------------------------------------------------------------------
-# Prompt injection guard — strip known LLM override tokens
-# ---------------------------------------------------------------------------
-_INJECTION_PATTERNS = re.compile(
-    r"(ignore previous|disregard|you are now|system:|act as|jailbreak)",
-    re.IGNORECASE,
-)
+SEVERITY_LEVELS = ["MINOR", "MODERATE", "SERIOUS", "CRITICAL", "CATASTROPHIC"]
+
+PROTOCOL_DATABASE = {
+    "weather": {"answer": "Activate Weather Protocol W-1. Move all fans to the lower concourse. Close upper-tier gates.", "category": "WEATHER", "id": 12},
+    "medical": {"answer": "Call Code Blue on radio channel 3. Dispatch nearest medical volunteer. Clear 3m radius.", "category": "MEDICAL", "id": 7},
+    "fire": {"answer": "Activate Protocol F-1. Begin full evacuation via designated exits. Do not use elevators.", "category": "FIRE", "id": 3},
+    "lost child": {"answer": "Escort to Family Assistance Point at Gate 1. Broadcast via PA immediately.", "category": "LOST_CHILD", "id": 21},
+    "security": {"answer": "Activate Protocol S-2. Contact venue security on radio channel 1.", "category": "SECURITY", "id": 8},
+    "crowd": {"answer": "Activate Protocol C-1. Open relief gates and request Crowd AI re-routing.", "category": "CROWD_MANAGEMENT", "id": 14},
+    "wheelchair": {"answer": "Contact volunteer with blue vest or call extension 4400.", "category": "ACCESSIBILITY", "id": 19},
+    "evacuation": {"answer": "Proceed calmly to the nearest lit exit following green-lit evacuation routes.", "category": "EVACUATION", "id": 1},
+}
 
 
-def _sanitize_query(text: str) -> str:
-    """Strip prompt injection patterns from user input."""
-    return _INJECTION_PATTERNS.sub("[REDACTED]", text).strip()
-
-
-# ---------------------------------------------------------------------------
-# Emergency Incidents
-# ---------------------------------------------------------------------------
 @emergency_bp.route("/incidents", methods=["GET"])
 def get_incidents():
-    """Return all active emergency incidents."""
     incidents = EmergencyIncident.query.all()
-    result = [
+    return jsonify([
         {
             "id": inc.id,
             "severity": inc.severity,
@@ -41,30 +37,27 @@ def get_incidents():
             "timestamp": inc.timestamp.isoformat() if inc.timestamp else None,
         }
         for inc in incidents
-    ]
-    return jsonify(result), 200
+    ]), 200
 
 
 @emergency_bp.route("/incidents", methods=["POST"])
 def escalate_incident():
-    """Escalate a new high-severity emergency incident."""
     data = request.get_json() or {}
     severity = data.get("severity", "MINOR")
-    incident_type = data.get("incident_type", "SECURITY")
-    zone_id = data.get("zone_id", 1)
-
+    if severity not in SEVERITY_LEVELS:
+        return jsonify({"error": f"severity must be one of {SEVERITY_LEVELS}"}), 400
     new_incident = EmergencyIncident(
-        severity=severity, incident_type=incident_type, zone_id=zone_id
+        severity=severity,
+        incident_type=data.get("incident_type", "SECURITY"),
+        zone_id=data.get("zone_id", 1),
     )
     db.session.add(new_incident)
     db.session.commit()
-    return jsonify({"id": new_incident.id, "message": "Incident escalated"}), 201
+    return jsonify({"id": new_incident.id, "message": "Incident escalated", "severity": severity}), 201
 
 
 @emergency_bp.route("/evacuations", methods=["POST"])
 def trigger_evacuation():
-    """Trigger a stadium-wide evacuation plan. Requires Commander role."""
-    # Role enforcement scaffold: @jwt_required() + role check goes here (Phase-12)
     data = request.get_json() or {}
     zone_id = data.get("zone_id", None)
     return jsonify({
@@ -75,91 +68,49 @@ def trigger_evacuation():
     }), 201
 
 
-# ---------------------------------------------------------------------------
-# Knowledge Assistant
-# ---------------------------------------------------------------------------
-PROTOCOL_DATABASE = {
-    "weather": {
-        "answer": "For severe weather: activate Weather Protocol W-1. Direct all fans to the lower concourse immediately. Close all upper-tier gates.",
-        "category": "WEATHER",
-        "id": 12,
-    },
-    "medical": {
-        "answer": "For medical emergencies: call Code Blue via radio channel 3. Dispatch the nearest medical volunteer. Clear a 3-metre radius.",
-        "category": "MEDICAL",
-        "id": 7,
-    },
-    "fire": {
-        "answer": "For fire: activate Protocol F-1. Initiate full evacuation via designated exit corridors. Do not use elevators.",
-        "category": "FIRE",
-        "id": 3,
-    },
-    "lost child": {
-        "answer": "For a lost child: escort to the Family Assistance Point at Gate 1. Broadcast name via PA system immediately.",
-        "category": "LOST_CHILD",
-        "id": 21,
-    },
-    "security": {
-        "answer": "For security threats: activate Protocol S-2. Contact venue security command post on radio channel 1.",
-        "category": "SECURITY",
-        "id": 8,
-    },
-    "crowd": {
-        "answer": "For crowd surges: activate Protocol C-1. Open relief gates and request Crowd AI re-routing.",
-        "category": "CROWD_MANAGEMENT",
-        "id": 14,
-    },
-    "wheelchair": {
-        "answer": "For wheelchair assistance: contact the nearest volunteer with a blue vest or call extension 4400.",
-        "category": "ACCESSIBILITY",
-        "id": 19,
-    },
-}
-
-
-def _rag_lookup(question: str) -> dict:
-    """
-    Lightweight keyword-based RAG retrieval against the PROTOCOL_DATABASE.
-    Returns the best matching protocol or a safe fallback.
-    """
-    question_lower = question.lower()
-    for keyword, protocol in PROTOCOL_DATABASE.items():
-        if keyword in question_lower:
-            return protocol
-    return {
-        "answer": "Please contact venue staff or dial emergency extension 9000 for immediate assistance.",
-        "category": "GENERAL",
-        "id": None,
-    }
-
-
 @knowledge_bp.route("/query", methods=["POST"])
 def query_knowledge_base():
     """
-    RAG-based Knowledge Assistant.
-    Sanitizes input, retrieves grounded protocol answer, returns cited source.
+    Knowledge Assistant via Unified AI Gateway.
+    Falls back through: OpenRouter → Gemini → Local Protocol DB
     """
     data = request.get_json() or {}
     raw_question = data.get("question", "")
-    clean_question = _sanitize_query(raw_question)
+    language = data.get("language", "en")
+    clean_question = sanitize(raw_question)
 
     if not clean_question:
         return jsonify({"error": "Question is required"}), 400
 
-    protocol = _rag_lookup(clean_question)
+    # Try AI Gateway first (OpenRouter → Gemini → Local)
+    ai_result = query_ai(
+        prompt=f"You are a stadium emergency assistant. Answer concisely: {clean_question}",
+        context="emergency",
+        language=language,
+    )
+
+    # Also do local keyword lookup for citation
+    protocol = None
+    question_lower = clean_question.lower()
+    for keyword, p in PROTOCOL_DATABASE.items():
+        if keyword in question_lower:
+            protocol = p
+            break
+
     return jsonify({
         "question": clean_question,
-        "ai_answer": protocol["answer"],
-        "category": protocol["category"],
-        "cited_protocol_id": protocol["id"],
-        "grounded": True,
+        "ai_answer": ai_result["response"],
+        "category": protocol["category"] if protocol else "GENERAL",
+        "cited_protocol_id": protocol["id"] if protocol else None,
+        "grounded": ai_result["grounded"],
+        "provider": ai_result["provider"],
+        "latency_ms": ai_result["latency_ms"],
     }), 200
 
 
 @knowledge_bp.route("/protocols", methods=["GET"])
 def list_protocols():
-    """Return all available protocol categories."""
     return jsonify([
-        {"category": p["category"], "id": p["id"]}
+        {"category": p["category"], "id": p["id"], "summary": p["answer"][:80]}
         for p in PROTOCOL_DATABASE.values()
     ]), 200

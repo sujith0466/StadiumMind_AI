@@ -19,13 +19,17 @@ def create_app(config_class=None):
     app = Flask(__name__)
 
     # --- Configuration ---
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(__file__), '.env'), override=True)
+    
     if config_class:
         app.config.from_object(config_class)
     else:
         app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key")
-        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-            "DATABASE_URL", "postgresql://stadium_admin:stadium_password@localhost:5432/stadium_mind"
-        )
+        db_url = os.environ.get("DATABASE_URL", "postgresql://stadium_admin:stadium_password@localhost:5432/stadium_mind")
+        if db_url.startswith("postgres://"):
+            db_url = db_url.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = db_url
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "dev-jwt-secret")
         app.config["REDIS_URL"] = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
@@ -80,5 +84,6 @@ def create_app(config_class=None):
 
 
 if __name__ == "__main__":
+    from app import create_app
     app = create_app()
     app.run(debug=False, host="0.0.0.0", port=5000)

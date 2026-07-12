@@ -1,0 +1,86 @@
+{
+    "Emergency": {
+        "EmergencySeverityMatrix": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:19.337442+00:00",
+            "Status": "Skipped"
+        },
+        "FirstResponder": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:19.499347+00:00",
+            "Status": "Skipped"
+        },
+        "EmergencyIncident": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:19.658652+00:00",
+            "Status": "Skipped"
+        },
+        "ALL": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T02:56:40.717303+00:00",
+            "Status": "Failed: (psycopg2.OperationalError) server closed the connection unexpectedly\n\tThis probably means the server terminated abnormally\n\tbefore or while processing the request.\nserver closed the connection unexpectedly\n\tThis probably means the server terminated abnormally\n\tbefore or while processing the request.\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+        }
+    },
+    "Foundation": {
+        "StadiumZone": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:18.803159+00:00",
+            "Status": "Skipped"
+        }
+    },
+    "Operations": {
+        "ALL": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T02:49:58.590326+00:00",
+            "Status": "Failed: (psycopg2.errors.ForeignKeyViolation) insert or update on table \"incidents\" violates foreign key constraint \"incidents_zone_id_fkey\"\nDETAIL:  Key (zone_id)=(3) is not present in table \"stadium_zones\".\n\n[SQL: INSERT INTO incidents (severity, status, zone_id, created_at) SELECT p0::VARCHAR, p1::VARCHAR, p2::INTEGER, p3::TIMESTAMP WITHOUT TIME ZONE FROM (VALUES (%(severity__0)s, %(status__0)s, %(zone_id__0)s, %(created_at__0)s, 0), (%(severity__1)s, %(statu ... 1784 characters truncated ... _sen(p0, p1, p2, p3, sen_counter) ORDER BY sen_counter RETURNING incidents.id, incidents.id AS id__1]\n[parameters: {'severity__0': 'HIGH', 'status__0': 'IN_PROGRESS', 'zone_id__0': 3, 'created_at__0': datetime.datetime(2026, 6, 12, 8, 56, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__1': 'MEDIUM', 'status__1': 'OPEN', 'zone_id__1': 9, 'created_at__1': datetime.datetime(2026, 6, 18, 15, 1, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__2': 'MEDIUM', 'status__2': 'IN_PROGRESS', 'zone_id__2': 5, 'created_at__2': datetime.datetime(2026, 6, 20, 12, 22, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__3': 'MEDIUM', 'status__3': 'RESOLVED', 'zone_id__3': 5, 'created_at__3': datetime.datetime(2026, 6, 29, 21, 1, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__4': 'LOW', 'status__4': 'IN_PROGRESS', 'zone_id__4': 9, 'created_at__4': datetime.datetime(2026, 6, 30, 21, 37, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__5': 'CRITICAL', 'status__5': 'RESOLVED', 'zone_id__5': 8, 'created_at__5': datetime.datetime(2026, 7, 2, 5, 51, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__6': 'CRITICAL', 'status__6': 'IN_PROGRESS', 'zone_id__6': 7, 'created_at__6': datetime.datetime(2026, 7, 3, 6, 28, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__7': 'CRITICAL', 'status__7': 'OPEN', 'zone_id__7': 9, 'created_at__7': datetime.datetime(2026, 7, 5, 5, 0, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__8': 'LOW', 'status__8': 'RESOLVED', 'zone_id__8': 3, 'created_at__8': datetime.datetime(2026, 7, 6, 13, 4, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__9': 'MEDIUM', 'status__9': 'IN_PROGRESS', 'zone_id__9': 4, 'created_at__9': datetime.datetime(2026, 7, 7, 7, 38, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__10': 'CRITICAL', 'status__10': 'OPEN', 'zone_id__10': 5, 'created_at__10': datetime.datetime(2026, 7, 7, 17, 51, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__11': 'CRITICAL', 'status__11': 'IN_PROGRESS', 'zone_id__11': 6, 'created_at__11': datetime.datetime(2026, 7, 8, 8, 35, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__12': 'HIGH', 'status__12': 'RESOLVED', 'zone_id__12': 8, 'created_at__12': datetime.datetime(2026, 7, 8, 22, 9, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__13': 'MEDIUM', 'status__13': 'OPEN', 'zone_id__13': 1, 'created_at__13': datetime.datetime(2026, 7, 10, 10, 12, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__14': 'LOW', 'status__14': 'IN_PROGRESS', 'zone_id__14': 10, 'created_at__14': datetime.datetime(2026, 7, 10, 12, 21, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__15': 'LOW', 'status__15': 'OPEN', 'zone_id__15': 5, 'created_at__15': datetime.datetime(2026, 7, 10, 13, 17, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__16': 'MEDIUM', 'status__16': 'RESOLVED', 'zone_id__16': 9, 'created_at__16': datetime.datetime(2026, 7, 10, 13, 43, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__17': 'LOW', 'status__17': 'RESOLVED', 'zone_id__17': 5, 'created_at__17': datetime.datetime(2026, 7, 10, 13, 58, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__18': 'HIGH', 'status__18': 'RESOLVED', 'zone_id__18': 6, 'created_at__18': datetime.datetime(2026, 7, 10, 19, 16, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__19': 'LOW', 'status__19': 'IN_PROGRESS', 'zone_id__19': 9, 'created_at__19': datetime.datetime(2026, 7, 11, 23, 27, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__20': 'MEDIUM', 'status__20': 'IN_PROGRESS', 'zone_id__20': 1, 'created_at__20': datetime.datetime(2026, 7, 12, 0, 12, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__21': 'MEDIUM', 'status__21': 'OPEN', 'zone_id__21': 7, 'created_at__21': datetime.datetime(2026, 7, 12, 0, 50, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__22': 'MEDIUM', 'status__22': 'OPEN', 'zone_id__22': 9, 'created_at__22': datetime.datetime(2026, 7, 12, 1, 14, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__23': 'MEDIUM', 'status__23': 'IN_PROGRESS', 'zone_id__23': 8, 'created_at__23': datetime.datetime(2026, 7, 12, 1, 42, 58, 146311, tzinfo=datetime.timezone.utc), 'severity__24': 'MEDIUM', 'status__24': 'OPEN', 'zone_id__24': 1, 'created_at__24': datetime.datetime(2026, 7, 12, 2, 44, 58, 146311, tzinfo=datetime.timezone.utc)}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)"
+        },
+        "Incident": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:20.088235+00:00",
+            "Status": "Skipped"
+        },
+        "OperationEvent": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:20.245015+00:00",
+            "Status": "Skipped"
+        }
+    },
+    "Crowd": {
+        "CrowdZone": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:20.794304+00:00",
+            "Status": "Skipped"
+        }
+    },
+    "Volunteers": {
+        "Volunteer": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:21.313975+00:00",
+            "Status": "Skipped"
+        },
+        "ALL": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T02:56:49.961318+00:00",
+            "Status": "Failed: 'volunteer_id' is an invalid keyword argument for VolunteerTask"
+        }
+    },
+    "Transport": {
+        "ParkingZone": {
+            "Seed Version": "v1.0.0",
+            "Records Inserted": 0,
+            "Last Seed Timestamp": "2026-07-12T05:17:21.873509+00:00",
+            "Status": "Skipped"
+        }
+    }
+}

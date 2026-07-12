@@ -4,7 +4,7 @@ services:
     env: python
     region: ohio
     buildCommand: "cd backend && pip install -r requirements.txt"
-    startCommand: "cd backend && python run.py"
+    startCommand: 'cd backend && gunicorn "app:create_app()" --bind 0.0.0.0:$PORT'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
