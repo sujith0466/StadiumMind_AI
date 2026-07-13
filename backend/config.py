@@ -26,7 +26,7 @@ class Config:
         "pool_recycle": 300,
     }
 
-    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "dev-jwt-secret")
+    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "dev-jwt-secret-key-must-be-at-least-32-bytes-long!")
     REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
     ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
     ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")

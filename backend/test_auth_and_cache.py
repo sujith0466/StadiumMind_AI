@@ -16,7 +16,7 @@ def app():
     application = create_app()
     application.config["TESTING"] = True
     application.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-    application.config["JWT_SECRET_KEY"] = "test-jwt-secret"
+    application.config["JWT_SECRET_KEY"] = "test-jwt-secret-key-must-be-at-least-32-bytes-long!"
     application.config["ADMIN_USERNAME"] = "testadmin"
     application.config["ADMIN_PASSWORD"] = "testpass"
     application.config["WTF_CSRF_ENABLED"] = False
