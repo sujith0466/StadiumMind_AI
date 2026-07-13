@@ -35,6 +35,32 @@ test.describe('StadiumMind AI E2E Verification', () => {
       // Wait a moment for dynamic data to settle (animations, skeletons)
       await page.waitForTimeout(2000); 
 
+      // Interact with specific elements based on the page
+      if (p.name === 'landing') {
+        const btn = page.getByRole('link', { name: /Fan Portal/i }).first();
+        if (await btn.isVisible()) {
+          await btn.hover();
+        }
+      } else if (p.name === 'fan') {
+        const input = page.getByPlaceholder(/Ask the stadium AI/i);
+        if (await input.isVisible()) {
+          await input.fill('Where is the nearest restroom?');
+          await page.keyboard.press('Enter');
+          await page.waitForTimeout(1000);
+        }
+      } else if (p.name === 'operations') {
+        // Try to click an incident action button
+        const actionBtn = page.getByRole('button', { name: /Dispatch/i }).first();
+        if (await actionBtn.isVisible()) {
+          await actionBtn.click();
+        }
+      } else if (p.name === 'emergency') {
+        const escalateBtn = page.getByRole('button', { name: /Escalate/i }).first();
+        if (await escalateBtn.isVisible()) {
+          await escalateBtn.click();
+        }
+      }
+
       const getFilename = (name: string, projectName: string) => {
         if (projectName === 'Desktop Chrome') {
           if (name === 'landing') return 'landing-desktop.png';

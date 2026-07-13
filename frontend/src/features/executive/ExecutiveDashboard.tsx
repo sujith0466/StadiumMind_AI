@@ -62,7 +62,7 @@ interface Decision {
 const KpiCard = ({ label, value, trend, prefix = '', suffix = '', emptyState = '—' }: { label: string; value: number | string | null | undefined; trend?: 'up' | 'down' | 'neutral'; prefix?: string; suffix?: string; emptyState?: string }) => {
   const isNull = value === null || value === undefined;
   return (
-    <article role="status" className="bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-slate-800/60 hover:border-slate-700/80 transition-all flex flex-col justify-between group">
+    <article className="bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-slate-800/60 hover:border-slate-700/80 transition-all flex flex-col justify-between group">
       <div className="flex justify-between items-start mb-2">
         <h2 className="text-xs font-semibold text-slate-400 tracking-wide uppercase">{label}</h2>
         {!isNull && trend === 'up' && <span className="text-emerald-400 text-xs" aria-label="Trending up">▲</span>}
@@ -191,7 +191,7 @@ const ExecutiveDashboard: React.FC = () => {
               <span className={`px-2.5 py-1 text-xs font-black rounded-full border tracking-widest ${data.platform_status === 'HEALTHY' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
                 ● {translate(data.platform_status)}
               </span>
-              <span className="text-slate-500 text-sm font-medium">| {translate("C-Suite Command Center")}</span>
+              <span className="text-slate-400 text-sm font-medium">| {translate("C-Suite Command Center")}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
               {translate("Executive Insights")}
@@ -235,17 +235,17 @@ const ExecutiveDashboard: React.FC = () => {
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-auto">
                 <div className="bg-slate-950/50 p-4 rounded-xl border border-slate-800/50">
-                  <h3 className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Confidence")}</h3>
+                  <h3 className="text-xs text-slate-400 uppercase font-bold mb-1">{translate("Confidence")}</h3>
                   <p className="text-lg font-bold text-emerald-400">{summary.confidence ? Math.round(summary.confidence * 100) + '%' : '—'}</p>
                 </div>
                 <div className="bg-slate-950/50 p-4 rounded-xl border border-slate-800/50">
-                  <h3 className="text-xs text-slate-500 uppercase font-bold mb-1">{translate("Business Impact")}</h3>
+                  <h3 className="text-xs text-slate-400 uppercase font-bold mb-1">{translate("Business Impact")}</h3>
                   <p className="text-lg font-bold text-amber-400">{summary.business_impact ? translate(summary.business_impact) : '—'}</p>
                 </div>
               </div>
             </div>
           ) : (
-             <div className="flex-1 flex items-center justify-center text-slate-500 italic p-6 text-center border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
+             <div className="flex-1 flex items-center justify-center text-slate-400 italic p-6 text-center border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
                {translate("AI Summary currently unavailable. Awaiting sufficient domain telemetry.")}
              </div>
           )}
@@ -256,7 +256,7 @@ const ExecutiveDashboard: React.FC = () => {
           <h2 id="telemetry-title" className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">{translate("Live Venue Telemetry")}</h2>
           <div className="space-y-6">
             <div aria-live="polite">
-              <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
+              <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
                 <span>{translate("Crowd Density Trend")}</span>
                 <span>{analytics?.crowd_density?.length ? translate('LIVE') : translate('OFFLINE')}</span>
               </div>
@@ -285,7 +285,7 @@ const ExecutiveDashboard: React.FC = () => {
         </div>
         
         {decisions.length === 0 ? (
-          <div className="py-12 text-center text-slate-500 border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
+          <div className="py-12 text-center text-slate-400 border border-dashed border-slate-700/50 rounded-xl bg-slate-900/20" aria-live="polite">
             {translate("No recent AI arbitration decisions.")}
           </div>
         ) : (

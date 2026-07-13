@@ -189,7 +189,7 @@ function GlobalNavbar() {
                               <p className={`text-sm truncate ${notif.read ? 'text-slate-300' : 'text-white font-semibold'}`}>
                                 {notif.title}
                               </p>
-                              <p className="text-[10px] text-slate-500 font-mono mt-1">{notif.time}</p>
+                              <p className="text-[10px] text-slate-400 font-mono mt-1">{notif.time}</p>
                             </div>
                             {!notif.read && (
                               <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1.5" />
@@ -265,7 +265,7 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans antialiased selection:bg-cyan-500/30">
       {!isLanding && <GlobalNavbar />}
-      <main className="flex-1 overflow-auto">
+      <div role="presentation" className="flex-1 overflow-auto bg-slate-900 text-slate-100">
         <Routes>
           <Route path="/"           element={<LandingPage />} />
           <Route path="/fan"        element={<FanPortal />} />
@@ -276,10 +276,10 @@ function AppContent() {
           <Route path="/volunteer"  element={<VolunteerDashboard />} />
           <Route path="/transport"  element={<TransportDashboard />} />
         </Routes>
-      </main>
+      </div>
       {!isLanding && (
         <footer className="border-t border-slate-800/80 bg-slate-950 px-6 py-4">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-400">
             <span>StadiumMind AI · Verified Live Stadium Telemetry & Operations</span>
             <span className="font-mono text-[11px]">Enterprise Safety Operations Certified</span>
           </div>

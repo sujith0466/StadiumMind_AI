@@ -119,7 +119,7 @@ const OperationsDashboard: React.FC = () => {
             <h2 id="incident-log-title" className="text-lg font-bold text-slate-200">Incident Log</h2>
           </div>
           {incidents.length === 0 ? (
-            <div className="text-center py-8 text-slate-500">
+            <div className="text-center py-8 text-slate-400">
               <span className="text-4xl" aria-hidden="true">📋</span>
               <p className="mt-2">No incidents logged.</p>
             </div>
@@ -129,17 +129,17 @@ const OperationsDashboard: React.FC = () => {
                 <caption className="sr-only">List of all active and resolved operations incidents.</caption>
                 <thead>
                   <tr className="border-b border-slate-800">
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">ID</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">Severity</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">Status</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">Zone</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">Action</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">ID</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">Severity</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">Status</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">Zone</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">Action</th>
                   </tr>
                 </thead>
                 <tbody aria-live="polite">
                   {incidents.map(inc => (
                     <tr key={inc.id} className="border-b border-slate-800/50 hover:bg-slate-800/30">
-                      <td className="py-3 font-mono text-slate-500">#{inc.id}</td>
+                      <td className="py-3 font-mono text-slate-400">#{inc.id}</td>
                       <td className="py-3">
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${SEVERITY_COLOR[inc.severity] || 'badge-info'}`}>
                           {inc.severity}
@@ -199,7 +199,7 @@ const OperationsDashboard: React.FC = () => {
                 {aiRec}
               </div>
             ) : (
-              <p className="text-xs text-slate-500 italic">Submit an incident to receive AI triage recommendations.</p>
+              <p className="text-xs text-slate-400 italic">Submit an incident to receive AI triage recommendations.</p>
             )}
           </section>
         </aside>

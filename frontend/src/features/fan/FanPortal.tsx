@@ -501,42 +501,42 @@ export default function FanPortal() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
                     <div>
-                      <span className="text-slate-500 block">{translate('Attendance')}</span>
+                      <span className="text-slate-400 block">{translate('Attendance')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <Users className="w-3.5 h-3.5 text-cyan-400" />
                         {liveMatch.attendance.toLocaleString()}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block">{translate('Weather')}</span>
+                      <span className="text-slate-400 block">{translate('Weather')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <CloudSun className="w-3.5 h-3.5 text-amber-400" />
                         {liveMatch.weather}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block">{translate('Possession')}</span>
+                      <span className="text-slate-400 block">{translate('Possession')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <Award className="w-3.5 h-3.5 text-purple-400" />
                         {liveMatch.possession || '50% — 50%'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block">{translate('Crowd Flow')}</span>
+                      <span className="text-slate-400 block">{translate('Crowd Flow')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <Layers className="w-3.5 h-3.5 text-emerald-400" />
                         {liveMatch.crowd_density || 'Optimal'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block">{translate('Security')}</span>
+                      <span className="text-slate-400 block">{translate('Security')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
                         {liveMatch.security_level || 'SECURE'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500 block">{translate('Est. Egress')}</span>
+                      <span className="text-slate-400 block">{translate('Est. Egress')}</span>
                       <span className="font-bold text-white flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-yellow-400" />
                         {liveMatch.estimated_exit_congestion || '< 5 min'}
@@ -694,7 +694,7 @@ export default function FanPortal() {
 
             {/* Suggested Prompts Bar */}
             <div className="px-6 py-2.5 bg-slate-950/40 border-b border-slate-800/60 flex items-center gap-2 overflow-x-auto no-scrollbar">
-              <span className="text-[11px] font-mono uppercase text-slate-500 shrink-0">
+              <span className="text-[11px] font-mono uppercase text-slate-400 shrink-0">
                 {currentUI.suggestionsTitle}:
               </span>
               {[
@@ -987,7 +987,7 @@ export default function FanPortal() {
 
                         <button
                           onClick={() => toggleFavorite(poi.id)}
-                          className="text-slate-500 hover:text-rose-400 transition-colors p-1"
+                          className="text-slate-400 hover:text-rose-400 transition-colors p-1"
                           title="Save to Favorites"
                         >
                           <Heart className={`w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}`} />
@@ -1049,7 +1049,7 @@ export default function FanPortal() {
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-1.5">
                           <span className="text-xs font-bold text-slate-200">{adv.badge}</span>
-                          <span className="text-[10px] font-mono text-slate-500">{adv.timestamp}</span>
+                          <span className="text-[10px] font-mono text-slate-400">{adv.timestamp}</span>
                         </div>
                         <h3 className="text-sm font-bold text-white leading-snug">{adv.title}</h3>
                         <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{adv.message}</p>
@@ -1063,11 +1063,11 @@ export default function FanPortal() {
                               className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 space-y-1.5 font-mono overflow-hidden"
                             >
                               <div className="flex justify-between">
-                                <span className="text-slate-500">{translate('Zone:')}</span>
+                                <span className="text-slate-400">{translate('Zone:')}</span>
                                 <span className="font-semibold text-white">{adv.target_zone}</span>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-slate-500">{translate('Status:')}</span>
+                                <span className="text-slate-400">{translate('Status:')}</span>
                                 <span className="text-cyan-400">{translate('AI Active')}</span>
                               </div>
                             </motion.div>
@@ -1093,7 +1093,7 @@ export default function FanPortal() {
                   );
                 })}
                 {activeAdvisories.length === 0 && (
-                  <div className="p-6 text-center text-slate-500 text-xs border border-dashed border-slate-800 rounded-2xl">
+                  <div className="p-6 text-center text-slate-400 text-xs border border-dashed border-slate-800 rounded-2xl">
                     {translate('No active stadium advisories')}
                   </div>
                 )}

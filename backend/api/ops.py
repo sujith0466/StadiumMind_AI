@@ -18,7 +18,7 @@ def run_seed():
         seed_emergency,
         seed_operations,
         seed_crowd,
-        seed_volunteers,
+        seed_volunteer,
         seed_transport,
     )
 
@@ -27,7 +27,7 @@ def run_seed():
         seed_emergency()
         seed_operations()
         seed_crowd()
-        seed_volunteers()
+        seed_volunteer()
         seed_transport()
         return (
             jsonify({"status": "Success", "message": "Production database seeded successfully."}),

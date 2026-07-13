@@ -109,7 +109,7 @@ const CrowdDashboard: React.FC = () => {
             {[1,2,3,4].map(i => <div key={i} className="skeleton h-32 rounded-xl" aria-hidden="true" />)}
           </div>
         ) : zones.length === 0 ? (
-          <div className="text-center py-8 text-slate-500">
+          <div className="text-center py-8 text-slate-400">
             <span className="text-4xl" aria-hidden="true">📊</span>
             <p className="mt-2">No zone data available</p>
             <p className="text-xs mt-1">Zones will appear when the database is seeded</p>
@@ -123,12 +123,12 @@ const CrowdDashboard: React.FC = () => {
                 <p className={`text-2xl font-black ${densityTextColor(zone.density_index)} mb-2`} aria-label={`Density ${Math.round(zone.density_index * 100)}%`}>
                   {Math.round(zone.density_index * 100)}%
                 </p>
-                <div className="progress-bar mb-1" role="progressbar" aria-valuenow={Math.round(zone.density_index * 100)} aria-valuemin={0} aria-valuemax={100}>
+                <div className="progress-bar mb-1" role="progressbar" aria-label={`Capacity ${zone.id}`} aria-valuenow={Math.round(zone.density_index * 100)} aria-valuemin={0} aria-valuemax={100}>
                   <div className={`progress-bar-fill ${densityColor(zone.density_index)}`}
                     style={{ width: `${Math.round(zone.density_index * 100)}%` }}
                   />
                 </div>
-                <p className="text-xs text-slate-500" aria-label={`Occupancy: ${zone.current_occupancy} out of ${zone.max_capacity}`}>
+                <p className="text-xs text-slate-400" aria-label={`Occupancy: ${zone.current_occupancy} out of ${zone.max_capacity}`}>
                   {zone.current_occupancy} / {zone.max_capacity}
                 </p>
               </article>
@@ -163,7 +163,7 @@ const CrowdDashboard: React.FC = () => {
               <span className="text-purple-400 font-bold">Route:</span> Zone {routeResult.start_zone}
               {routeResult.waypoints.slice(1, -1).map(w => ` → Z${w}`)} → Zone {routeResult.end_zone}
             </p>
-            <p className="text-xs text-slate-500 mt-1">AI-generated safe bypass route · Active: {routeResult.is_active ? 'Yes' : 'No'}</p>
+            <p className="text-xs text-slate-400 mt-1">AI-generated safe bypass route · Active: {routeResult.is_active ? 'Yes' : 'No'}</p>
           </div>
         )}
       </section>

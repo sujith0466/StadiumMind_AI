@@ -71,27 +71,27 @@ const TransportDashboard: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4" aria-live="polite">
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">🌿 Carbon Offset</h3>
                 <p className="text-2xl font-black text-emerald-400">{(metrics?.total_carbon_offset_kg || 0).toLocaleString()} <span className="text-sm font-normal" aria-label="kilograms">kg</span></p>
               </article>
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">☀️ Renewable Energy</h3>
                 <p className="text-2xl font-black text-amber-400">{Math.round((metrics?.renewable_energy_percentage || 0) * 100)}%</p>
               </article>
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">💧 Water Usage</h3>
                 <p className="text-2xl font-black text-cyan-400">{(metrics?.water_usage_liters || 0).toLocaleString()} <span className="text-sm font-normal" aria-label="Liters">L</span></p>
               </article>
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">♻️ Recycling Rate</h3>
                 <p className="text-2xl font-black text-teal-400">{Math.round((metrics?.recycling_rate_percentage || 0) * 100)}%</p>
               </article>
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">🗑️ Waste Diversion</h3>
                 <p className="text-2xl font-black text-purple-400">{Math.round((metrics?.waste_diversion_percentage || 0) * 100)}%</p>
               </article>
-              <article role="status" className="bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <article className="bg-slate-900 p-4 rounded-xl border border-slate-800">
                 <h3 className="text-xs font-bold text-slate-400 uppercase mb-1">💰 Energy Savings</h3>
                 <p className="text-2xl font-black text-white">${(metrics?.energy_cost_savings_usd || 0).toLocaleString()}</p>
               </article>
@@ -122,7 +122,7 @@ const TransportDashboard: React.FC = () => {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-slate-500" aria-live="polite">No profile active.</p>
+            <p className="text-sm text-slate-400" aria-live="polite">No profile active.</p>
           )}
         </section>
       </div>
@@ -135,7 +135,7 @@ const TransportDashboard: React.FC = () => {
             {[1,2,3,4].map(i => <div key={i} className="skeleton h-24 rounded-xl" />)}
           </div>
         ) : parking.length === 0 ? (
-          <div className="text-center py-8 text-slate-500 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="text-center py-8 text-slate-400 bg-slate-900 rounded-xl border border-slate-800">
             <span className="text-4xl" aria-hidden="true">🅿️</span>
             <p className="mt-2">No parking data available</p>
           </div>
@@ -159,7 +159,7 @@ const TransportDashboard: React.FC = () => {
                       {Math.round(pct * 100)}%
                     </span>
                   </div>
-                  <div className="progress-bar" role="progressbar" aria-valuenow={Math.round(pct * 100)} aria-valuemin={0} aria-valuemax={100}>
+                  <div className="progress-bar" role="progressbar" aria-label={`Capacity ${p.id}`} aria-valuenow={Math.round(pct * 100)} aria-valuemin={0} aria-valuemax={100}>
                     <div className={`progress-bar-fill ${barColor(pct)}`} style={{ width: `${pct * 100}%` }} />
                   </div>
                 </article>

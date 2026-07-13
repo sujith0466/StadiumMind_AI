@@ -313,7 +313,7 @@ export default function LandingPage() {
               key={item.step}
               className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-colors"
             >
-              <span className="text-3xl font-black font-mono text-cyan-500/40 block mb-3">{item.step}</span>
+              <span className="text-3xl font-black font-mono text-cyan-500 block mb-3">{item.step}</span>
               <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
               <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
             </div>
@@ -338,7 +338,7 @@ export default function LandingPage() {
                   <Globe className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white">Tier 1: Cloud Intelligence Routing</h4>
+                  <h3 className="text-sm font-bold text-white">Tier 1: Cloud Intelligence Routing</h3>
                   <p className="text-xs text-slate-400 mt-1">Primary intelligent routing providing live telemetry with sub-second response streaming.</p>
                 </div>
               </div>
@@ -347,7 +347,7 @@ export default function LandingPage() {
                   <Cpu className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white">Tier 2: Edge Computing Redundancy</h4>
+                  <h3 className="text-sm font-bold text-white">Tier 2: Edge Computing Redundancy</h3>
                   <p className="text-xs text-slate-400 mt-1">Automatic fallback to localized edge processing if primary cloud endpoints experience timeout.</p>
                 </div>
               </div>
@@ -356,7 +356,7 @@ export default function LandingPage() {
                   <Terminal className="w-5 h-5 text-emerald-400" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white">Tier 3: Offline Deterministic Safety</h4>
+                  <h3 className="text-sm font-bold text-white">Tier 3: Offline Deterministic Safety</h3>
                   <p className="text-xs text-slate-400 mt-1">Zero-external-dependency heuristic engine ensuring venue safety instructions are always delivered offline.</p>
                 </div>
               </div>
@@ -445,7 +445,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="py-12 border-t border-slate-900 bg-slate-950 px-6">
-        <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
+        <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
           <div className="flex items-center gap-2">
             <Brain className="w-5 h-5 text-cyan-400" />
             <span className="font-semibold text-slate-300">StadiumMind AI</span>
