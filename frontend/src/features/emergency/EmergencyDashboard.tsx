@@ -81,7 +81,7 @@ const EmergencyDashboard: React.FC = () => {
         </div>
         <button
           onClick={handleEvacuate}
-          className="bg-red-600 hover:bg-red-700 text-white font-black py-2.5 px-8 rounded-lg shadow-lg transition-all animate-pulse focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-offset-2 focus:ring-offset-slate-950"
+          className="bg-red-700 hover:bg-red-800 text-white font-black py-2.5 px-8 rounded-lg shadow-lg transition-all focus:ring-2 focus:ring-red-400 focus:outline-none focus:ring-offset-2 focus:ring-offset-slate-950"
           aria-label="Trigger full stadium evacuation"
         >
           🚨 TRIGGER EVACUATION
@@ -133,16 +133,17 @@ const EmergencyDashboard: React.FC = () => {
               <span className="ml-2 text-xs font-mono badge-critical px-2 py-0.5 rounded-full" aria-label={`${incidents.length} active incidents`}>{incidents.length}</span>
             </h2>
             {loading ? <Skeleton /> : incidents.length === 0 ? (
-              <div className="text-center py-8 text-slate-500">
+              <div className="text-center py-8 text-slate-400">
                 <span className="text-4xl" aria-hidden="true">✅</span>
                 <p className="mt-2">No active incidents</p>
               </div>
             ) : (
               <div className="space-y-2" aria-live="polite">
                 {incidents.map(inc => (
-                  <article key={inc.id} role="alert" className="flex items-center justify-between bg-slate-950 px-4 py-3 rounded-lg border border-slate-800">
+                  <article key={inc.id} className="bg-slate-950 px-4 py-3 rounded-lg border border-slate-800">
+                    <div role="alert" className="flex items-center justify-between w-full">
                     <div>
-                      <span className="font-mono text-xs text-slate-500 mr-2">#{inc.id}</span>
+                      <span className="font-mono text-xs text-slate-400 mr-2">#{inc.id}</span>
                       <span className="font-semibold text-slate-200 mr-2">{inc.incident_type}</span>
                       <span className="text-xs text-slate-400">Zone {inc.zone_id}</span>
                     </div>
@@ -151,6 +152,7 @@ const EmergencyDashboard: React.FC = () => {
                         {inc.severity}
                       </span>
                       <span className="text-xs text-slate-400">{inc.status}</span>
+                    </div>
                     </div>
                   </article>
                 ))}
@@ -162,7 +164,7 @@ const EmergencyDashboard: React.FC = () => {
         {/* Right: Knowledge Assistant */}
         <section className="bg-slate-900 rounded-xl border border-slate-800 p-5" aria-labelledby="assistant-title">
           <h2 id="assistant-title" className="text-lg font-bold text-slate-200 mb-1">Knowledge Assistant</h2>
-          <p className="text-xs text-slate-500 mb-4">RAG · OpenRouter → Gemini → Local fallback</p>
+          <p className="text-xs text-slate-400 mb-4">RAG · OpenRouter → Gemini → Local fallback</p>
           <div className="space-y-3">
             <label htmlFor="assistant-input" className="sr-only">Ask the assistant</label>
             <textarea
@@ -177,7 +179,7 @@ const EmergencyDashboard: React.FC = () => {
             <button
               onClick={handleQuery}
               disabled={queryLoading}
-              className="w-full bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white font-bold py-2 rounded-lg text-sm transition-colors focus:ring-2 focus:ring-cyan-500 focus:outline-none focus:ring-offset-2 focus:ring-offset-slate-900"
+              className="w-full bg-cyan-700 hover:bg-cyan-800 disabled:opacity-50 disabled:bg-slate-800 disabled:text-slate-300 text-white font-bold py-2 rounded-lg text-sm transition-colors focus:ring-2 focus:ring-cyan-500 focus:outline-none focus:ring-offset-2 focus:ring-offset-slate-900"
             >
               {queryLoading ? 'Consulting AI...' : 'Ask Assistant'}
             </button>
@@ -186,7 +188,7 @@ const EmergencyDashboard: React.FC = () => {
             <div className="mt-4 p-4 bg-slate-950 border-l-4 border-cyan-500 rounded-r-lg fade-in" aria-live="polite">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-bold text-cyan-400">AI RESPONSE</span>
-                <span className="text-xs text-slate-500 font-mono" aria-label={`Provider: ${aiProvider}`}>{aiProvider}</span>
+                <span className="text-xs text-slate-400 font-mono" aria-label={`Provider: ${aiProvider}`}>{aiProvider}</span>
               </div>
               <p className="text-sm text-slate-200 leading-relaxed">{aiResponse}</p>
             </div>

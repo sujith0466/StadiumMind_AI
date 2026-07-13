@@ -78,19 +78,19 @@ const VolunteerDashboard: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" aria-live="polite">
-            <article role="status" className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+            <article className="bg-slate-900 p-5 rounded-xl border border-slate-800">
               <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">🤝 Total Volunteers</h2>
               <p className="text-3xl font-black text-white">{volunteers.length}</p>
             </article>
-            <article role="status" className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+            <article className="bg-slate-900 p-5 rounded-xl border border-slate-800">
               <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">✅ Active Now</h2>
               <p className="text-3xl font-black text-emerald-400">{activeCount}</p>
             </article>
-            <article role="status" className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+            <article className="bg-slate-900 p-5 rounded-xl border border-slate-800">
               <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">⏱ Avg Response</h2>
               <p className="text-3xl font-black text-cyan-400">{analytics?.avg_response_time ?? 0}<span className="text-sm" aria-label="seconds">s</span></p>
             </article>
-            <article role="status" className="bg-slate-900 p-5 rounded-xl border border-slate-800">
+            <article className="bg-slate-900 p-5 rounded-xl border border-slate-800">
               <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">🌐 Translation Rate</h2>
               <p className="text-3xl font-black text-amber-400">
                 {Math.round((analytics?.translation_success_rate ?? 0) * 100)}%
@@ -105,7 +105,7 @@ const VolunteerDashboard: React.FC = () => {
         <section className="lg:col-span-2 bg-slate-900 rounded-xl border border-slate-800 p-5" aria-labelledby="volunteer-roster-title">
           <h2 id="volunteer-roster-title" className="text-lg font-bold text-slate-200 mb-4">Volunteer Roster</h2>
           {volunteers.length === 0 ? (
-            <div className="text-center py-8 text-slate-500">
+            <div className="text-center py-8 text-slate-400">
               <span className="text-4xl" aria-hidden="true">👥</span>
               <p className="mt-2">No volunteers in database yet</p>
               <p className="text-xs mt-1">Volunteer records will appear here once seeded</p>
@@ -115,16 +115,16 @@ const VolunteerDashboard: React.FC = () => {
               <table className="w-full text-sm" role="table" aria-label="Volunteer roster">
                 <thead>
                   <tr className="border-b border-slate-800">
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2 pr-4">ID</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2 pr-4">Name</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2 pr-4">Status</th>
-                    <th scope="col" className="text-left text-xs text-slate-500 py-2">Capabilities</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2 pr-4">ID</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2 pr-4">Name</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2 pr-4">Status</th>
+                    <th scope="col" className="text-left text-xs text-slate-400 py-2">Capabilities</th>
                   </tr>
                 </thead>
                 <tbody aria-live="polite">
                   {volunteers.map(v => (
                     <tr key={v.id} className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors">
-                      <td className="py-2.5 pr-4 font-mono text-slate-500">#{v.id}</td>
+                      <td className="py-2.5 pr-4 font-mono text-slate-400">#{v.id}</td>
                       <td className="py-2.5 pr-4 text-slate-200 font-medium">{v.name}</td>
                       <td className="py-2.5 pr-4">
                         <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${v.active ? 'badge-healthy' : 'badge-warning'}`}>
@@ -132,7 +132,7 @@ const VolunteerDashboard: React.FC = () => {
                         </span>
                       </td>
                       <td className="py-2.5">
-                        <div className="flex gap-1" aria-label="Capabilities">
+                        <div className="flex gap-1" role="group" aria-label="Capabilities">
                           {(['medical_training', 'mobility_assistance', 'sign_language', 'security_clearance'] as const).map(cap =>
                             v[cap] ? (
                               <span key={cap} title={cap.replace('_', ' ')} aria-label={cap.replace('_', ' ')} className="text-base">{CAPABILITY_ICONS[cap]}</span>

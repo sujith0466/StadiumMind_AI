@@ -71,7 +71,7 @@ body {
 /* Status badges */
 .badge-healthy { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
 .badge-warning { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-.badge-critical { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.badge-critical { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
 .badge-info    { background: rgba(6, 182, 212, 0.15);  color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); }
 
 /* Fade-in */
