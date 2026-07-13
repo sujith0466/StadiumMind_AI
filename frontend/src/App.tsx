@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
-import LandingPage from './features/landing/LandingPage';
-import FanPortal from './features/fan/FanPortal';
-import EmergencyDashboard from './features/emergency/EmergencyDashboard';
-import ExecutiveDashboard from './features/executive/ExecutiveDashboard';
-import OperationsDashboard from './features/operations/Dashboard';
-import CrowdDashboard from './features/crowd/CrowdDashboard';
-import VolunteerDashboard from './features/volunteer/VolunteerDashboard';
-import TransportDashboard from './features/transport/TransportDashboard';
+const LandingPage = lazy(() => import('./features/landing/LandingPage'));
+const FanPortal = lazy(() => import('./features/fan/FanPortal'));
+const EmergencyDashboard = lazy(() => import('./features/emergency/EmergencyDashboard'));
+const ExecutiveDashboard = lazy(() => import('./features/executive/ExecutiveDashboard'));
+const OperationsDashboard = lazy(() => import('./features/operations/Dashboard'));
+const CrowdDashboard = lazy(() => import('./features/crowd/CrowdDashboard'));
+const VolunteerDashboard = lazy(() => import('./features/volunteer/VolunteerDashboard'));
+const TransportDashboard = lazy(() => import('./features/transport/TransportDashboard'));
 import { LanguageProvider, useLanguage, type LanguageCode } from './context/LanguageContext';
 import { Brain, Bell, ShieldCheck, Globe, Menu, X, CheckCheck, Info, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,7 +22,7 @@ const NAV_ITEMS = [
   { path: '/transport',  labelKey: '🚌 Transport',        badge: null },
 ];
 
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 
 function GlobalNavbar() {
   const { language, setLanguage, translate } = useLanguage();
@@ -258,6 +258,13 @@ function GlobalNavbar() {
   );
 }
 
+const DashboardFallback = () => (
+  <div role="status" aria-live="polite" className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
+    <div className="w-8 h-8 rounded-full border-4 border-cyan-500/30 border-t-cyan-500 animate-spin" aria-hidden="true" />
+    <p className="text-slate-400 font-mono text-sm">Loading module...</p>
+  </div>
+);
+
 function AppContent() {
   const location = useLocation();
   const isLanding = location.pathname === '/';
@@ -266,16 +273,18 @@ function AppContent() {
     <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans antialiased selection:bg-cyan-500/30">
       {!isLanding && <GlobalNavbar />}
       <div role="presentation" className="flex-1 overflow-auto bg-slate-900 text-slate-100">
-        <Routes>
-          <Route path="/"           element={<LandingPage />} />
-          <Route path="/fan"        element={<FanPortal />} />
-          <Route path="/executive"  element={<ExecutiveDashboard />} />
-          <Route path="/emergency"  element={<EmergencyDashboard />} />
-          <Route path="/operations" element={<OperationsDashboard />} />
-          <Route path="/crowd"      element={<CrowdDashboard />} />
-          <Route path="/volunteer"  element={<VolunteerDashboard />} />
-          <Route path="/transport"  element={<TransportDashboard />} />
-        </Routes>
+        <Suspense fallback={<DashboardFallback />}>
+          <Routes>
+            <Route path="/"           element={<LandingPage />} />
+            <Route path="/fan"        element={<FanPortal />} />
+            <Route path="/executive"  element={<ExecutiveDashboard />} />
+            <Route path="/emergency"  element={<EmergencyDashboard />} />
+            <Route path="/operations" element={<OperationsDashboard />} />
+            <Route path="/crowd"      element={<CrowdDashboard />} />
+            <Route path="/volunteer"  element={<VolunteerDashboard />} />
+            <Route path="/transport"  element={<TransportDashboard />} />
+          </Routes>
+        </Suspense>
       </div>
       {!isLanding && (
         <footer className="border-t border-slate-800/80 bg-slate-950 px-6 py-4">

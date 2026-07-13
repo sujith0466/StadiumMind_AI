@@ -36,7 +36,9 @@ def create_app(config_class=None):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
         app.config["SQLALCHEMY_DATABASE_URI"] = db_url
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-        app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "dev-jwt-secret-key-must-be-at-least-32-bytes-long!")
+        app.config["JWT_SECRET_KEY"] = os.environ.get(
+            "JWT_SECRET_KEY", "dev-jwt-secret-key-must-be-at-least-32-bytes-long!"
+        )
         app.config["REDIS_URL"] = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 
     # --- Extensions ---
