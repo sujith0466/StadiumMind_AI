@@ -2,6 +2,7 @@ import PageHead from '../../components/PageHead';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PageContainer } from '../../components/layout/PageContainer'
+import { StatCard } from '../../components/ui/StatCard'
 
 interface CrowdZone {
   id: number
@@ -81,22 +82,26 @@ const CrowdDashboard: React.FC = () => {
       {/* KPIs */}
       {loading ? <Skeleton /> : (
         <section aria-label="Crowd Key Performance Indicators" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Total Occupancy</h2>
-            <p className="text-3xl font-black text-white">{(kpi?.total_stadium_occupancy ?? 0).toLocaleString()}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">High-Density Alerts</h2>
-            <p className="text-3xl font-black text-red-400">{kpi?.high_density_alerts ?? 0}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Active Safe Routes</h2>
-            <p className="text-3xl font-black text-emerald-400">{kpi?.active_safe_routes ?? 0}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Avg Density</h2>
-            <p className={`text-3xl font-black ${densityTextColor(avgDensity)}`}>{Math.round(avgDensity * 100)}%</p>
-          </div>
+          <StatCard 
+            title="Total Occupancy" 
+            value={(kpi?.total_stadium_occupancy ?? 0).toLocaleString()} 
+            valueColorClass="text-white"
+          />
+          <StatCard 
+            title="High-Density Alerts" 
+            value={kpi?.high_density_alerts ?? 0} 
+            valueColorClass="text-red-400"
+          />
+          <StatCard 
+            title="Active Safe Routes" 
+            value={kpi?.active_safe_routes ?? 0} 
+            valueColorClass="text-emerald-400"
+          />
+          <StatCard 
+            title="Avg Density" 
+            value={`${Math.round(avgDensity * 100)}%`} 
+            valueColorClass={densityTextColor(avgDensity)}
+          />
         </section>
       )}
 

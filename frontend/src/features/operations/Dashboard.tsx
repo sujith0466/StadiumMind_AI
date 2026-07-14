@@ -2,6 +2,7 @@ import PageHead from '../../components/PageHead';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PageContainer } from '../../components/layout/PageContainer'
+import { StatCard } from '../../components/ui/StatCard'
 
 interface Incident {
   id: number
@@ -93,22 +94,26 @@ const OperationsDashboard: React.FC = () => {
         </section>
       ) : (
         <section aria-label="Key Performance Indicators" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Total Incidents</h2>
-            <p className="text-3xl font-black text-white">{kpi?.total_incidents ?? 0}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Open</h2>
-            <p className="text-3xl font-black text-amber-400">{kpi?.open_incidents ?? 0}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Resolved</h2>
-            <p className="text-3xl font-black text-emerald-400">{kpi?.resolved_incidents ?? 0}</p>
-          </div>
-          <div className="bg-slate-900 p-5 rounded-xl border border-slate-800" role="status">
-            <h2 className="text-xs font-bold text-slate-400 uppercase mb-1">Active Zones</h2>
-            <p className="text-3xl font-black text-blue-400">{kpi?.active_zones ?? 0}</p>
-          </div>
+          <StatCard 
+            title="Total Incidents" 
+            value={kpi?.total_incidents ?? 0} 
+            valueColorClass="text-white"
+          />
+          <StatCard 
+            title="Open" 
+            value={kpi?.open_incidents ?? 0} 
+            valueColorClass="text-amber-400"
+          />
+          <StatCard 
+            title="Resolved" 
+            value={kpi?.resolved_incidents ?? 0} 
+            valueColorClass="text-emerald-400"
+          />
+          <StatCard 
+            title="Active Zones" 
+            value={kpi?.active_zones ?? 0} 
+            valueColorClass="text-blue-400"
+          />
         </section>
       )}
 
