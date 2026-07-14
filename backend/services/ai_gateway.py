@@ -166,7 +166,9 @@ MULTILINGUAL_PREFIX = {
 }
 
 
-def _local_response(prompt: str, language: str = "en") -> str:
+def _local_response(
+    prompt: str, language: str = "en"
+) -> str:  # Fixed parameter name from query to prompt
     query_target = (
         prompt.split("Question:")[-1].strip().lower() if "Question:" in prompt else prompt.lower()
     )
