@@ -3,19 +3,19 @@
         "EmergencySeverityMatrix": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.639015+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.532463+00:00",
             "Status": "Skipped"
         },
         "FirstResponder": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.664847+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.552632+00:00",
             "Status": "Skipped"
         },
         "EmergencyIncident": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.695949+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.581337+00:00",
             "Status": "Skipped"
         },
         "ALL": {
@@ -29,7 +29,7 @@
         "StadiumZone": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.618983+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.511698+00:00",
             "Status": "Skipped"
         }
     },
@@ -43,13 +43,13 @@
         "Incident": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.728931+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.602462+00:00",
             "Status": "Skipped"
         },
         "OperationEvent": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.754718+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.625504+00:00",
             "Status": "Skipped"
         }
     },
@@ -57,7 +57,7 @@
         "CrowdZone": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.781087+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.669617+00:00",
             "Status": "Skipped"
         }
     },
@@ -65,7 +65,7 @@
         "Volunteer": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.814589+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.699870+00:00",
             "Status": "Skipped"
         },
         "ALL": {
@@ -79,7 +79,7 @@
         "ParkingZone": {
             "Seed Version": "v1.0.0",
             "Records Inserted": 0,
-            "Last Seed Timestamp": "2026-07-13T10:23:48.842022+00:00",
+            "Last Seed Timestamp": "2026-07-14T02:10:59.723232+00:00",
             "Status": "Skipped"
         }
     }
