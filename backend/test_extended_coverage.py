@@ -39,28 +39,27 @@ class TestExtendedCoverage:
         """Seed the database using the ops endpoint to prepare for further tests."""
         response = client.post("/api/ops/seed")
         # May be 200 Success or 500 if some constraints fail, but we just need coverage.
-        assert response.status_code in [200, 500]
+        assert response.status_code == 200
 
     def test_fan_dashboard(self, client):
         response = client.get("/api/fan/dashboard/1")
-        assert response.status_code in [200, 404]
+        assert response.status_code == 200
         assert "live_match" in response.get_json()
 
     def test_fan_advisories(self, client):
         response = client.get("/api/fan/advisories")
-        assert response.status_code in [200, 404]
+        assert response.status_code == 200
         assert isinstance(response.get_json(), list)
 
     def test_fan_journey(self, client):
-        response = client.get("/api/fan/journey/1")
-        assert response.status_code in [200, 404]
+        response = client.get("/api/fan/journey")
+        assert response.status_code == 200
         data = response.get_json()
-        if data:
-            assert "journey_steps" in data
+        assert isinstance(data, list)
 
     def test_fan_pois_and_poi(self, client):
         response = client.get("/api/fan/pois")
-        assert response.status_code in [200, 404]
+        assert response.status_code == 200
         data = response.get_json()
         assert isinstance(data, list)
 
@@ -75,8 +74,8 @@ class TestExtendedCoverage:
         assert client.get("/api/fan/live").status_code in [200, 404]
 
     def test_fan_assistant(self, client):
-        response = client.post("/api/fan/assistant", json={"message": "Where is parking?"})
-        assert response.status_code in [200, 400, 404]
+        response = client.post("/api/fan/assistant", json={"query": "Where is parking?"})
+        assert response.status_code == 200
 
         # Test empty message
         assert client.post("/api/fan/assistant", json={}).status_code == 400
