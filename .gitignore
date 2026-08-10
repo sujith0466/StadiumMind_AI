@@ -35,3 +35,6 @@ instance/
 *.njsproj
 *.sln
 *.sw?
+check_db.py
+test_all_pages.cjs
+test_vercel.cjsverify_live.cjs
