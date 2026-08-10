@@ -74,7 +74,12 @@ def create_app(config_class=None):
     # --- Health Check ---
     @app.route("/health", methods=["GET"])
     def health_check():
-        return jsonify({"status": "ok", "version": "1.0.0"}), 200
+        try:
+            from sqlalchemy import text
+            db.session.execute(text("SELECT 1"))
+            return jsonify({"status": "ok", "version": "1.0.0", "database": "connected"}), 200
+        except Exception as e:
+            return jsonify({"status": "error", "version": "1.0.0", "database": "disconnected", "error": str(e)}), 503
 
     # --- Register Blueprints ---
     from api.ops import ops_bp
@@ -114,7 +119,7 @@ def create_app(config_class=None):
                         seed_emergency,
                         seed_operations,
                         seed_crowd,
-                        seed_volunteers,
+                        seed_volunteer,
                         seed_transport,
                     )
 
@@ -123,7 +128,7 @@ def create_app(config_class=None):
                     seed_emergency()
                     seed_operations()
                     seed_crowd()
-                    seed_volunteers()
+                    seed_volunteer()
                     seed_transport()
                     print("Database auto-seeding complete.")
             except Exception as e:
